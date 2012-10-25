@@ -53,9 +53,82 @@ table {
 body {
 	width: 940px;
 	margin: 0 auto;
-	border: 1px solid black;
+	font-family: Futura, "Trebuchet MS", Arial, sans-serif;
 }
 
+#Content {
+	margin-top: 200px;
+}
+
+.Widget {
+	position: relative;
+	height: 120px;
+	margin-bottom: 20px;
+	border: 2px solid rgb(100,100,100);
+	box-shadow: 4px 4px 4px #777;
+	border-radius: 8px;
+	background: rgb(72,72,72); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(72,72,72,1) 0%, rgba(40,40,40,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(72,72,72,1)), color-stop(100%,rgba(40,40,40,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(72,72,72,1) 0%,rgba(40,40,40,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(72,72,72,1) 0%,rgba(40,40,40,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(72,72,72,1) 0%,rgba(40,40,40,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(72,72,72,1) 0%,rgba(40,40,40,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#484848', endColorstr='#282828',GradientType=0 ); /* IE6-9 */
+	cursor: pointer;
+}
+
+.Widget .WidgetTitle {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 240px;
+	padding-top: 32px;
+	height: 86px;
+	border-right: 2px solid black;
+	font-size: 24px;
+	color: white;
+	text-align: center;
+}	
+
+.Widget .WidgetTitle:hover {
+	background: rgb(255,168,76); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(255,168,76,1) 0%, rgba(255,123,13,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,168,76,1)), color-stop(100%,rgba(255,123,13,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(255,168,76,1) 0%,rgba(255,123,13,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(255,168,76,1) 0%,rgba(255,123,13,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(255,168,76,1) 0%,rgba(255,123,13,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(255,168,76,1) 0%,rgba(255,123,13,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffa84c', endColorstr='#ff7b0d',GradientType=0 ); /* IE6-9 */
+
+}
+
+.Widget .WidgetContent {
+	position: absolute;
+	top: 0px;
+	left: 242px;
+	height: 120px;
+	width: 700px;
+}
+
+#ProgressBarTitle {
+	font-size: 20px;
+	color: white;
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+#ProgressBar {
+	border: 1px solid red;
+	height: 22px;
+	width: 600px;
+	margin: 0 auto;
+	
+}
+.ui-progressbar .ui-progressbar-value { 
+	background-image: url(../images/pbar-ani.gif);
+}
 
 
 
