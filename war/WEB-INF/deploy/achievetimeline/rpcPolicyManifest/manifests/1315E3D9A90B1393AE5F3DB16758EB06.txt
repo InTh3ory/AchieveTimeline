@@ -1,0 +1,2 @@
+serviceClass: com.web.achievetimeline.client.GreetingService
+path: 8A17042BEF9A1FFF7FE9D57FD9D97F38.gwt.rpc
