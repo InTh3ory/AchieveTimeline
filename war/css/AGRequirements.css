@@ -65,7 +65,7 @@ body {
 	position: relative;
 	height: 120px;
 	margin-bottom: 40px;
-	border: 2px solid rgb(100,100,100);
+	
 	box-shadow: 4px 4px 4px #777;
 	border-radius: 8px;
 	background: rgb(72,72,72); /* Old browsers */
@@ -152,6 +152,7 @@ body {
 	color: white;
 	border-radius: 4px;
 	margin-bottom: 20px;
+	box-shadow: 2px 2px 2px #777;
 }
 
 .LightWidget .Title {
@@ -199,8 +200,12 @@ body {
 	font-size: 10px;
 	color: rgb(200,200,200);
 	border-top: 1px solid rgb(80,80,80);
+	cursor: pointer;
 }
 
+.LightWidget .ExpandButton:hover {
+	color: orange;
+}
 
 
 

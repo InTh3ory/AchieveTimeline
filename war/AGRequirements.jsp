@@ -35,7 +35,7 @@
 				<div class="CompletedButton"></div><span>Unit One - Incomplete</span><br /><div class="CompletedButton"></div><span>Unit Two - Incomplete</span>
 			</div>
 			<div class="ShortDescription"><div style="color: orange; font-weight: bold;">Description</div>Two years, including one year of world history, cultures, and historical geography and one year of us history or one-half year of us history and one-half year of civics or American government.</div>
-			<div class="ExpandButton">Source</div>
+			<a href="http://www.ucop.edu/a-gGuide/ag/a-g/history_reqs.html"><div class="ExpandButton">Source</div></a>
 		</div>
 		
 		<div class="LightWidget">
@@ -44,7 +44,7 @@
 				<div class="CompletedButton"></div><span>Unit One - Incomplete</span><br /><div class="CompletedButton"></div><span>Unit Two - Incomplete</span><br /><div class="CompletedButton"></div><span>Unit Three - Incomplete</span><br /><div class="CompletedButton"></div><span>Unit Four - Incomplete</span>
 			</div>
 			<div class="ShortDescription"><div style="color: orange; font-weight: bold;">Description</div>Four years of college preparatory English that include frequent and regular writing, and reading of classic and modern literature.</div>
-			<div class="ExpandButton">Source</div>
+			<a href="http://www.ucop.edu/a-gGuide/ag/a-g/english_reqs.html"><div class="ExpandButton">Source</div></a>
 		</div>
 		
 		<div class="LightWidget">
@@ -53,7 +53,7 @@
 				<div class="CompletedButton"></div><span>Unit One - Incomplete</span><br /><div class="CompletedButton"></div><span>Unit Two - Incomplete</span><br /><div class="CompletedButton"></div><span>Unit Three - Incomplete</span>
 			</div>
 			<div class="ShortDescription"><div style="color: orange; font-weight: bold;">Description</div>Three years of college preparatory mathematics that include the topics covered in elementary and advanced algebra and two- and three-dimensional geometry.</div>
-			<div class="ExpandButton">Source</div>
+			<a href="http://www.ucop.edu/a-gGuide/ag/a-g/math_reqs.html"><div class="ExpandButton">Source</div></a>
 		</div>
 		
 		<div class="LightWidget">
@@ -62,7 +62,7 @@
 				<div class="CompletedButton"></div><span>Unit One - Incomplete</span><br /><div class="CompletedButton"></div><span>Unit Two - Incomplete</span>
 			</div>
 			<div class="ShortDescription"><div style="color: orange; font-weight: bold;">Description</div>Two years of laboratory science providing fundamental knowledge in at least two of these three disciplines: biology, chemistry, and physics.</div>
-			<div class="ExpandButton">Source</div>
+			<a href="http://www.ucop.edu/a-gGuide/ag/a-g/science_reqs.html"><div class="ExpandButton">Source</div></a>
 		</div>
 		
 		<div class="LightWidget">
@@ -71,7 +71,7 @@
 				<div class="CompletedButton"></div><span>Unit One - Incomplete</span><br /><div class="CompletedButton"></div><span>Unit Two - Incomplete</span>
 			</div>
 			<div class="ShortDescription"><div style="color: orange; font-weight: bold;">Description</div>Two years of the same language other than English.</div>
-			<div class="ExpandButton">Source</div>
+			<a href="http://www.ucop.edu/a-gGuide/ag/a-g/language_reqs.html"><div class="ExpandButton">Source</div></a>
 		</div>
 		
 		<div class="LightWidget">
@@ -80,7 +80,7 @@
 				<div class="CompletedButton"></div><span>Unit One - Incomplete</span>
 			</div>
 			<div class="ShortDescription"><div style="color: orange; font-weight: bold;">Description</div>One year, including dance, drama/theater, music, or visual art.</div>
-			<div class="ExpandButton">Source</div>
+			<a href="http://www.ucop.edu/a-gGuide/ag/a-g/vpa.html"><div class="ExpandButton">Source</div></a>
 		</div>
 		
 		<div class="LightWidget">
@@ -89,7 +89,7 @@
 				<div class="CompletedButton"></div><span>Unit One - Incomplete</span>
 			</div>
 			<div class="ShortDescription"><div style="color: orange; font-weight: bold;">Description</div>One year (two semesters), chosen from additional "a-f" courses beyond those used to satisfy the requirements above, or courses that have been approved solely for use as "g" electives.</div>
-			<div class="ExpandButton">Source</div>
+			<a href="http://www.ucop.edu/a-gGuide/ag/a-g/elective.html"><div class="ExpandButton">Source</div></a>
 		</div>
 		
 	
