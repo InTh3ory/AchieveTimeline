@@ -23,18 +23,25 @@
 <body>
 	<div id="Content">
 		<div class="Widget">
-			<div class="WidgetTitle">My "A-G"<br /> Requirements</div>
+			<a href="AGRequirements.jsp"><div class="WidgetTitle AGTitle">My "A-G"<br /> Requirements</div></a>
 			<div class="WidgetContent">
-				<div id="ProgressBarTitle">Percentage Of Requirements Complete: 88%</div>
+				<div id="ProgressBarTitle">Percent Of Requirements Complete: 88%</div>
 				<div id="ProgressBar"></div>
 			</div>
 		</div>
+		
+		<!--div class="Widget">
+			<div class="WidgetTitle ApplicationsTitle">My Applications</div>
+			<div class="WidgetContent">
+				
+			</div>
+		</div-->
 	
 	</div>
 <script>
 $(function() {
         $("#ProgressBar").progressbar({
-            value: 59
+            value: 88
         });
 });
 </script>
