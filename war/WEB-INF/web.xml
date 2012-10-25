@@ -13,7 +13,7 @@
   
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>AchieveTimeline.html</welcome-file>
+    <welcome-file>Dashboard.jsp</welcome-file>
   </welcome-file-list>
 
   <servlet>
