@@ -13,6 +13,7 @@
 
 <!doctype html>
 <html>
+<link rel="stylesheet" type="text/css" href="css/Layout.css" />
 <link rel="stylesheet" type="text/css" href="css/Dashboard.css" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
@@ -21,6 +22,9 @@
     <title>Calendar</title>    
 </head>
 <body>
+	<div id="NavBar">
+		<div id="NavList"><a href="Dashboard.jsp"><span>Dashboard</span></a><span style="float: right">Logout</span></div>
+	</div>
 	<div id="Content">
 		<div class="Widget">
 			<a href="AGRequirements.jsp"><div class="WidgetTitle AGTitle">My "A-G"<br /> Requirements</div></a>
@@ -30,12 +34,19 @@
 			</div>
 		</div>
 		
-		<!--div class="Widget">
+		<div class="Widget">
 			<div class="WidgetTitle ApplicationsTitle">My Applications</div>
 			<div class="WidgetContent">
 				
 			</div>
-		</div-->
+		</div>
+		
+		<div class="Widget">
+			<div class="WidgetTitle ApplicationsTitle">My Timeline</div>
+			<div class="WidgetContent">
+				
+			</div>
+		</div>
 	
 	</div>
 <script>

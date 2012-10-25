@@ -58,7 +58,7 @@ body {
 }
 
 #Content {
-	margin-top: 20px;
+	margin-top: 60px;
 }
 
 .Widget {
@@ -84,7 +84,7 @@ body {
 	top: 0px;
 	left: 0px;
 	width: 240px;
-	
+	border-radius: 8px;
 	border-right: 2px solid black;
 	font-size: 24px;
 	color: white;
