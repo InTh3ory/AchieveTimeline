@@ -35,6 +35,42 @@ public class AGRequirements extends HttpServlet {
 		UserService userService = UserServiceFactory.getUserService();
         User user = userService.getCurrentUser();
         String userId = user.getUserId();
+        
+        String keyStr = req.getParameter("key");
+        String a_unitone = req.getParameter("a_unitone");    // TODO: Use a for loop for iterating through all parameters, Ras
+        String a_unittwo = req.getParameter("a_unittwo");
+        
+        String b_unitone = req.getParameter("b_unitone");
+        String b_unittwo = req.getParameter("b_unittwo");
+        String b_unitthree = req.getParameter("b_unitthree");
+        String b_unitfour = req.getParameter("b_unitfour");
+
+
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        
+        Entity entity = new Entity("AGRequirements");
+        Key key = entity.getKey();
+        if (keyStr != null) {
+        	System.out.println(keyStr);
+        	
+        	try {
+				entity = datastore.get(KeyFactory.stringToKey(keyStr));
+			} catch (EntityNotFoundException e) {
+				System.out.println("Event not updated, event " + keyStr + " not found: " + e);
+				return;
+			}
+        }
+        
+        entity.setProperty("userId", userId);
+        entity.setProperty("a_unitone", a_unitone);
+		entity.setProperty("a_unittwo", a_unittwo);
+        
+        // Put the entity in the data store.
+        datastore.put(entity);
+        entity.setProperty("key", KeyFactory.keyToString(entity.getKey()));
+
+        resp.setContentType("text/html");
+        resp.getWriter().println("In AGRequirements");
 	}
 	
 public void doGet(HttpServletRequest req, HttpServletResponse resp) {
