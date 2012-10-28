@@ -35,9 +35,17 @@
 		</div>
 		
 		<div class="Widget">
-			<div class="WidgetTitle ApplicationsTitle">My Applications</div>
+			<a href="MyApplications.jsp"><div class="WidgetTitle ApplicationsTitle">My Applications</div></a>
 			<div class="WidgetContent">
+				<div class="Column1">
+					<div class="Stat">Applications in progress<span class="Orange">4</span></div>
+					<div class="Stat">Applications Complete<span class="Green">1</span></div>
+				</div>
 				
+				<div class="Column2">
+					<div class="Stat">Tasks in progress<span class="Orange">19</span></div>
+					<div class="Stat">Tasks Complete<span class="Green">8</span></div>
+				</div>
 			</div>
 		</div>
 		

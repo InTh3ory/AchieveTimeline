@@ -84,7 +84,6 @@ body {
 	top: 0px;
 	left: 0px;
 	width: 240px;
-	
 	border-right: 2px solid black;
 	font-size: 24px;
 	color: white;
@@ -140,7 +139,53 @@ body {
 	height: 76px;
 }
 
+.Widget .Column1 {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 349px;
+	height: 120px;
+}
 
+.Widget .Column2 {
+	position: absolute;
+	left: 349px;
+	top: 0px;
+	width: 350px;
+	height: 120px;
+}
+
+.Widget .Stat {
+	font-size: 20px;
+	color: white;
+	text-align: left;	
+	padding: 18px;
+	color: rgb(220,220,220);
+}
+
+.Widget .Stat  span{
+	float: right;
+	margin-right: 40px;	
+	font-weight: bold;
+	font-size: 22px;
+}
+
+.Orange {
+	color: #FFA54A;
+}
+
+.Red {
+	color: red;
+}
+
+.Purple {
+	color: purple;
+}
+
+
+.Green {
+	color: #4DB849;
+}
 
 
 
