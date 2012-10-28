@@ -189,6 +189,12 @@ body {
 	cursor: pointer;
 }
 
+.Completed {
+	border: 1px solid #00B91A;
+	background-color: #00B91A;
+	box-shadow: 0px 0px 8px #00B91A;
+}
+
 .LightWidget .ShortDescription {
 	padding: 10px;
 	border-top: 1px solid rgb(80,80,80);
