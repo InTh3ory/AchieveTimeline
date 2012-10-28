@@ -136,7 +136,6 @@ function GetRequirementsValues() {
 	  	url: 'agrequirements/get',
 	  	type: 'GET',
 	  	dataType: "json",
-		data: data,
 	 	success: function(data) {
 			
 			console.log(data);
