@@ -103,7 +103,7 @@
 				</div>
 		</div>
 		
-		<div id="MonthView">
+		<div id="MonthView" style='display: none;'>
 			<div class="MonthDay">
 				<div class="MicroCalendarDay">1</div>
 					<div class="Task Orange">
@@ -125,6 +125,43 @@
 		</div>
 		
 		<div id="ListView">
+			<div class='ListItem'>
+				<div class='DateTitle'>
+					Sunday Oct 28, 2012
+				</div>
+				<div class='ListTask Task Orange'>
+					<div class='ListTaskTitle'>Super Title</div>					
+					<div class='ListTaskNotes'>Lalalal here are my notes</div>
+				</div>
+				<div class='ListTask Task Blue'>
+					<div class='ListTaskTitle'>Super Title</div>				
+					<div class='ListTaskNotes'>Lalalal here are my notes</div>
+				</div>
+				<div class='ListTask Task Orange'>
+					<div class='ListTaskTitle'>Super Title</div>					
+					<div class='ListTaskNotes'>Lalalal here are my notes</div>
+				</div>
+			</div>
+			
+			<div class='ListItem'>
+				<div class='DateTitle'>
+					Monday Oct 29, 2012
+				</div>
+				<div class='ListTask Task Orange'>
+					<div class='ListTaskTitle'>Super Title</div>					
+					<div class='ListTaskNotes'>Lalalal here are my notes</div>
+				</div>
+			</div>
+			
+			<div class='ListItem'>
+				<div class='DateTitle'>
+					Tuesday Oct 30, 2012
+				</div>
+				<div class='ListTask'>
+					<div class='ListTaskTitle'>Super Title</div>					
+					<div class='ListTaskNotes'>Lalalal here are my notes</div>
+				</div>
+			</div>
 			
 		
 		</div>
@@ -137,14 +174,26 @@
 <script>
 
 $("#WeekButton").click(function(){
-	$("#MonthView").fadeOut(600, function(){
-		$("#WeekView").fadeIn();
+	$("#MonthView").fadeOut(300, function(){
+		$("#ListView").fadeOut(300, function(){
+			$("#WeekView").fadeIn();
+		});		
 	});
 });
 
 $("#MonthButton").click(function(){
-	$("#WeekView").fadeOut(600, function(){
-		$("#MonthView").fadeIn();
+	$("#WeekView").fadeOut(300, function(){
+		$("#ListView").fadeOut(300, function(){
+			$("#MonthView").fadeIn();
+		});		
+	});
+});
+
+$("#ListButton").click(function(){
+	$("#WeekView").fadeOut(300, function(){
+		$("#MonthView").fadeOut(300, function(){
+			$("#ListView").fadeIn();
+		});		
 	});
 });
 

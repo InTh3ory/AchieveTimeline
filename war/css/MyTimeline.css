@@ -287,5 +287,47 @@ body {
 	color: white;
 }
 
+#ListView {
+	background-color: rgba(0,0,0,0.9);
+	border: 2px solid #01A2FF;
+	border-radius: 4px;
+	padding: 10px;
+}
+
+#ListView .ListItem {
+	margin-bottom: 20px;
+}
+
+#ListView .DateTitle {
+	color: white;
+	font-size: 18px;
+	font-weight: bold;
+	border-bottom: 1px solid rgb(100,100,100);
+	padding: 4px;
+	margin-bottom: 8px;
+}
+
+#ListView .ListTask {
+	padding: 12px;
+	border-top: none;
+	border-right: none;
+	border-bottom: none;
+	margin-bottom: 5px;
+}
+
+#ListView .ListTaskTitle {
+	font-size: 16px;
+	font-weight: bold;
+	color: white;
+	margin-bottom: 5px;
+}
+
+#ListView .ListTaskNotes {
+	font-size: 12px;
+	color: rgb(200,200,200);
+}
+
+
+
 
 
