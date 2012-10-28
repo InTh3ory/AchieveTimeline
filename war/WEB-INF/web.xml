@@ -11,6 +11,12 @@
     <url-pattern>/agrequirements/update</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+    <servlet-name>AGRequirements</servlet-name>
+    <url-pattern>/agrequirements/get</url-pattern>
+  </servlet-mapping>
+  
+  
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>Dashboard.jsp</welcome-file>
