@@ -1,0 +1,291 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+/* Start of my code*/
+
+
+
+body {
+	width: 1120px;
+	margin: 0 auto;
+	font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+	background-size: cover;
+	background-position: fixed;
+}
+
+#Content {
+	margin-top: 70px;
+}
+
+#TimelineDash {
+
+}
+
+#TimelineDash  div{
+	color: white;
+	font-size: 12px;
+	display: inline-block;
+	margin-bottom: 20px;
+	padding: 10px;
+	width: 80px;
+	text-align: center;
+	background: rgb(72,72,72); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(72,72,72,1) 0%, rgba(40,40,40,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(72,72,72,1)), color-stop(100%,rgba(40,40,40,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(72,72,72,1) 0%,rgba(40,40,40,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(72,72,72,1) 0%,rgba(40,40,40,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(72,72,72,1) 0%,rgba(40,40,40,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(72,72,72,1) 0%,rgba(40,40,40,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#484848', endColorstr='#282828',GradientType=0 ); /* IE6-9 */
+	cursor: pointer;
+}
+
+#TimelineDash div:hover {
+	background: rgb(255,168,76); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(255,168,76,1) 0%, rgba(255,123,13,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,168,76,1)), color-stop(100%,rgba(255,123,13,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(255,168,76,1) 0%,rgba(255,123,13,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(255,168,76,1) 0%,rgba(255,123,13,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(255,168,76,1) 0%,rgba(255,123,13,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(255,168,76,1) 0%,rgba(255,123,13,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffa84c', endColorstr='#ff7b0d',GradientType=0 ); /* IE6-9 */
+}
+
+#WeekButton {
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+	border-right: 1px solid rgb(100,100,100);
+}
+
+#MonthButton {
+	border-left: 1px solid black;
+	border-right: 1px solid rgb(100,100,100);
+}
+
+#ListButton {
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-left: 1px solid black;
+}
+
+#InstitutionList {
+	margin-top: 20px;
+	min-width: 300px;
+	display: inline-block;
+}
+
+.Institution {
+	padding: 8px;
+	border-radius: 2px;
+	margin-bottom: 4px;
+}
+
+#WeekView {
+	position: relative;	
+	height: 400px;
+}
+
+#WeekView .WeekDay {
+	width: 158px;
+	height: 400px;
+}
+
+#WeekView .First {
+	width: 159px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background-color: rgb(40,40,40); /* Old browsers */
+	border-right: 1px solid rgb(80,80,80); /* Old browsers */
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+	
+}
+
+#WeekView .Second {
+	position: absolute;
+	top: 0px;
+	left: 160px;
+	background-color: rgb(50,50,50); /* Old browsers */
+	border-left: 1px solid black; /* Old browsers */
+	border-right: 1px solid rgb(80,80,80); /* Old browsers */
+}
+
+#WeekView .Third {
+	position: absolute;
+	top: 0px;
+	left: 320px;
+	background-color: rgb(40,40,40); /* Old browsers */
+	border-left: 1px solid black; /* Old browsers */
+	border-right: 1px solid rgb(80,80,80); /* Old browsers */
+}
+#WeekView .Fourth {
+	position: absolute;
+	top: 0px;
+	left: 480px;
+	background-color: rgb(50,50,50); /* Old browsers */
+	border-left: 1px solid black; /* Old browsers */
+	border-right: 1px solid rgb(80,80,80); /* Old browsers */
+}
+
+#WeekView .Fifth {
+	position: absolute;
+	top: 0px;
+	left: 640px;
+	background-color: rgb(40,40,40); /* Old browsers */
+	border-left: 1px solid black; /* Old browsers */
+	border-right: 1px solid rgb(80,80,80); /* Old browsers */
+}
+#WeekView .Sixth {
+	position: absolute;
+	top: 0px;
+	left: 800px;
+	background-color: rgb(50,50,50); /* Old browsers */
+	border-left: 1px solid black; /* Old browsers */
+	border-right: 1px solid rgb(80,80,80); /* Old browsers */
+}
+#WeekView .Seventh {
+	width: 159px;
+	position: absolute;
+	top: 0px;
+	left: 960px;
+	background-color: rgb(40,40,40); /* Old browsers */
+	border-left: 1px solid black; /* Old browsers */
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+}
+
+#WeekView .CalendarDay {
+	position: relative;
+	width: 100px;
+	height: 110px;
+	margin: 30px;
+	border: 2px solid rgb(100,100,100);
+	border-radius: 4px;
+	background: rgb(149,149,149); /* Old browsers */
+	background: -moz-linear-gradient(left,  rgba(149,149,149,1) 0%, rgba(13,13,13,1) 0%, rgba(78,78,78,1) 49%, rgba(27,27,27,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(149,149,149,1)), color-stop(0%,rgba(13,13,13,1)), color-stop(49%,rgba(78,78,78,1)), color-stop(100%,rgba(27,27,27,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(left,  rgba(149,149,149,1) 0%,rgba(13,13,13,1) 0%,rgba(78,78,78,1) 49%,rgba(27,27,27,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(left,  rgba(149,149,149,1) 0%,rgba(13,13,13,1) 0%,rgba(78,78,78,1) 49%,rgba(27,27,27,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(left,  rgba(149,149,149,1) 0%,rgba(13,13,13,1) 0%,rgba(78,78,78,1) 49%,rgba(27,27,27,1) 100%); /* IE10+ */
+	background: linear-gradient(to right,  rgba(149,149,149,1) 0%,rgba(13,13,13,1) 0%,rgba(78,78,78,1) 49%,rgba(27,27,27,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#959595', endColorstr='#1b1b1b',GradientType=1 ); /* IE6-9 */
+}
+
+.CalendarDay .Divider {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 60px;
+	width: 100px;
+	border-bottom: 2px solid rgb(20,20,20);
+	z-index: 1;
+}
+
+.CalendarDay .Day {
+	color: #FFA54A;
+	text-align: center;
+	font-size: 16px;
+	margin-top: 10px;
+}	
+
+.CalendarDay .Number {
+	color: white;
+	text-align: center;
+	margin-top: 20px;
+	font-size: 48px;
+}
+
+.Blue {	
+	border: 1px solid #138DFF;
+	border-left: 8px solid #138DFF;	
+}
+
+.Orange {
+	border: 1px solid orange;
+	border-left: 8px solid orange;	
+}
+
+#WeekView .Task {
+	margin: 4px;
+	padding: 4px;
+	font-size: 12px;
+	color: white;
+}
+
+#MonthView {
+	position: relative;
+	height: 640px;
+}
+
+#MonthView .MonthDay {
+	position: absolute;
+	width: 158px;
+	height: 158px;
+	background-color: rgba(0,0,0,0.6);
+	border: 1px solid #01A2FF;
+	overflow: hidden;
+}
+
+#MonthView .MicroCalendarDay {
+	color: white;
+	padding: 6px;
+	font-size: 12px;
+}
+
+#MonthView .Task {
+	margin: 4px;
+	padding: 4px;
+	font-size: 12px;
+	color: white;
+}
+
+
+

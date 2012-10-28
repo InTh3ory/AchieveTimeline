@@ -55,10 +55,23 @@ body {
 	width: 940px;
 	margin: 0 auto;
 	font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+	
 }
 
 #Content {
 	margin-top: 200px;
+}
+
+
+.About {
+	border-radius: 4px;
+	border-2px solid white;
+	box-shadow: 0px 0px 4px white;
+	padding: 20px;
+	margin-bottom: 100px;
+	background-color: rgba(0,0,0, 0.8);
+	color: white;
+	line-height: 1.4;
 }
 
 .Widget {
@@ -190,7 +203,54 @@ body {
 
 
 
+/*Calendar Stuff*/
 
+.MiniCalendarDay {
+	width: 80px;
+	height: 90px;
+	border: 1px solid rgb(100,100,100);
+	background-color: rgb(20,20,20);
+	border-radius: 4px;
+	display: inline-block;
+	margin: 10px;
+	margin-left: 36px;
+	position: relative;
+	background: rgb(149,149,149); /* Old browsers */
+background: -moz-linear-gradient(left,  rgba(149,149,149,1) 0%, rgba(13,13,13,1) 0%, rgba(78,78,78,1) 49%, rgba(27,27,27,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(149,149,149,1)), color-stop(0%,rgba(13,13,13,1)), color-stop(49%,rgba(78,78,78,1)), color-stop(100%,rgba(27,27,27,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(left,  rgba(149,149,149,1) 0%,rgba(13,13,13,1) 0%,rgba(78,78,78,1) 49%,rgba(27,27,27,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(left,  rgba(149,149,149,1) 0%,rgba(13,13,13,1) 0%,rgba(78,78,78,1) 49%,rgba(27,27,27,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(left,  rgba(149,149,149,1) 0%,rgba(13,13,13,1) 0%,rgba(78,78,78,1) 49%,rgba(27,27,27,1) 100%); /* IE10+ */
+background: linear-gradient(to right,  rgba(149,149,149,1) 0%,rgba(13,13,13,1) 0%,rgba(78,78,78,1) 49%,rgba(27,27,27,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#959595', endColorstr='#1b1b1b',GradientType=1 ); /* IE6-9 */
+
+}
+
+.MiniCalendarDay .Divider {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 54px;
+	width: 80px;
+	border-bottom: 1px solid rgb(20,20,20);
+	z-index: 1;
+
+	
+}
+
+.MiniCalendarDay .Day {
+	color: #FFA54A;
+	text-align: center;
+	font-size: 12px;
+	margin-top: 10px;
+}	
+
+.MiniCalendarDay .Number {
+	color: white;
+	text-align: center;
+	margin-top: 20px;
+	font-size: 38px;
+}
 
 
 

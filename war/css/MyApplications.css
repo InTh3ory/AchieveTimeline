@@ -4,6 +4,9 @@ body {
 	margin: 0 auto;
 	font-family: Futura, "Trebuchet MS", Arial, sans-serif;
 	color: rgb(60,60,60);
+	
+	background-size: 100%;
+	background-attachment:fixed;
 }
 
 #Content {
@@ -175,7 +178,7 @@ body {
 .SelectionIndicator {
 	position: absolute;
 	top: 16px;
-	left: -68px;
+	left: -90px;
 	height: 64px;
 	width: 64px;
 	background-image: url(../images/right_arrow.png);
@@ -187,12 +190,10 @@ body {
 	margin-top: 20px;
 	color: white;
 	position: relative;
-	opacity: 0.75;
 }
 
 .Application:hover {
-	color: orange;
-	opacity: 1.0;
+	color: orange;	
 }
 
 .Application .ApplicationHeader {

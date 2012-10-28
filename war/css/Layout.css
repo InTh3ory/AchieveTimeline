@@ -1,4 +1,10 @@
 
+body {
+	background-image: url(http://www.hdwallpapers.in/walls/beautiful_village-wide.jpg);
+	background-size: cover;
+	background-position: fixed;
+}
+
 a {
 	text-decoration: none;
 	color: white;

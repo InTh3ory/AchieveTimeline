@@ -55,6 +55,9 @@ body {
 	margin: 0 auto;
 	font-family: Futura, "Trebuchet MS", Arial, sans-serif;
 	color: rgb(60,60,60);
+	background-size: 100%;
+	background-attachment:fixed;
+	
 }
 
 #Content {

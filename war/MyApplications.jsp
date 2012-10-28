@@ -18,7 +18,7 @@
 <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
 <head>
-    <title>Calendar</title>    
+    <title>Achieve Timeline</title>    
 </head>
 <body>
 	<div id="NavBar">
@@ -185,12 +185,19 @@ $(".Application").click(function(){
 });
 
 function ApplicationSelected(application) {
-	$(application).css("opacity", "1");
-	$(application).find(".SelectionIndicator").fadeIn();
+	$(application).css("color", "orange");
+	
+	$(application).find(".SelectionIndicator").show();
+	$(application).find(".SelectionIndicator").animate({
+			left: -68
+		});
 	
 	$(application).siblings().each(function(){
-		$(this).css("opacity", "0.75");
+		$(this).css("color", "white");
 		$(this).find(".SelectionIndicator").fadeOut();
+		$(this).find(".SelectionIndicator").animate({
+			left: -90
+		});
 	});
 }
 

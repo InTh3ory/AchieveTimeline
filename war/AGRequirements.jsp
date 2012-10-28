@@ -18,7 +18,7 @@
 <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
 <head>
-    <title>Calendar</title>    
+    <title>Achieve Timeline</title>    
 </head>
 <body>
 	<div id="NavBar">
