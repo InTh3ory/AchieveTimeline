@@ -129,25 +129,42 @@ $(function() {
 });
 
 function UpdateRequirements() {
-	var requirementsArray = [];
+	var ag = [];
 	
 	$(".CompletedButton").each(function(){
 		var completed = $(this).hasClass("Completed");
 		
 		if(completed) {
-			requirementsArray.push(true);
+			ag.push(true);
 		} else {
-			requirementsArray.push(false);
+			ag.push(false);
 		}
 	});
 	
+	
+	var data = {a_unitone: ag[0],
+	a_unittwo: ag[1],
+	b_unitone: ag[2],
+	b_unittwo: ag[3],
+	b_unitthree: ag[4],
+	b_unitfour: ag[5],
+	c_unitone: ag[6],
+	c_unittwo: ag[7],
+	c_unitthree: ag[8],
+	d_unitone: ag[9],
+	d_unittwo: ag[10],
+	e_unitone: ag[11],
+	e_unittwo: ag[12],
+	f_unitone: ag[13],
+	g_unitone: ag[14]
+	};
 	
 $(function() {
 	$.ajax({
 	  	url: 'agrequirements/update',
 	  	type: 'POST',
 	  	dataType: "json",
-
+		data: data,
 	 	success: function(newData) {
 			
 			console.log('success');
