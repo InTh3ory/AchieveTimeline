@@ -47,9 +47,8 @@ public class AGRequirements extends HttpServlet {
 
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Entity entity;
         
-        Entity entity = new Entity("AGRequirements");
-        Key key = entity.getKey();
         if (keyStr != null) {
         	System.out.println(keyStr);
         	
@@ -59,18 +58,37 @@ public class AGRequirements extends HttpServlet {
 				System.out.println("Event not updated, event " + keyStr + " not found: " + e);
 				return;
 			}
+        } else
+        {
+        	entity = new Entity("AGRequirements");
+        	//Key key = entity.getKey();
+        	//if(null != key)
+        		//System.out.println("Creating new entity: " + KeyFactory.keyToString(key));
         }
+        
+        //Key key = entity.getKey();
+        
         
         entity.setProperty("userId", userId);
         entity.setProperty("a_unitone", a_unitone);
 		entity.setProperty("a_unittwo", a_unittwo);
-        
-        // Put the entity in the data store.
+		
+		entity.setProperty("b_unitone", b_unitone);
+		entity.setProperty("b_unittwo", b_unittwo);
+		entity.setProperty("b_unitthree", b_unitthree);
+		entity.setProperty("b_unitfour", b_unitfour);
+		//entity.setProperty("key", KeyFactory.keyToString(entity.getKey()));
+		
+		
+		// Put the entity in the data store.
         datastore.put(entity);
-        entity.setProperty("key", KeyFactory.keyToString(entity.getKey()));
+        //entity.setProperty("key", KeyFactory.keyToString(entity.getKey()));
 
-        resp.setContentType("text/html");
-        resp.getWriter().println("In AGRequirements");
+        // Notify the client of success.
+        resp.setContentType("application/json");
+        Gson gson = new Gson();
+        String json = gson.toJson(entity);
+        resp.getWriter().println(json);
 	}
 	
 public void doGet(HttpServletRequest req, HttpServletResponse resp) {
