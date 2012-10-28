@@ -126,7 +126,25 @@ $(function() {
         $("#ProgressBar").progressbar({
             value: 88
         });
+		
+		GetRequirementsValues();
 });
+
+function GetRequirementsValues() {
+	$(function() {
+	$.ajax({
+	  	url: 'agrequirements/get',
+	  	type: 'GET',
+	  	dataType: "json",
+		data: data,
+	 	success: function(data) {
+			
+			console.log(data);
+		}
+	});
+});
+	
+}
 
 function UpdateRequirements() {
 	var ag = [];
@@ -158,7 +176,7 @@ function UpdateRequirements() {
 	f_unitone: ag[13],
 	g_unitone: ag[14]
 	};
-	console.log(data);
+	
 $(function() {
 	$.ajax({
 	  	url: 'agrequirements/update',
