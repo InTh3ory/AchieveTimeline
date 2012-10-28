@@ -6,8 +6,16 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%
+   
+    
     UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
+   
+    if (user != null) {
+    	
+    } else {
+    	response.sendRedirect(userService.createLoginURL(request.getRequestURI()));
+    }
    
 %>
 
