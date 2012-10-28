@@ -292,6 +292,9 @@ body {
 	border: 2px solid #01A2FF;
 	border-radius: 4px;
 	padding: 10px;
+	height: 600px;
+	overflow: auto;
+	overflow-x: hidden;
 }
 
 #ListView .ListItem {
