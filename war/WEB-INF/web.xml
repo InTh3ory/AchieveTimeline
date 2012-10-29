@@ -16,6 +16,21 @@
     <url-pattern>/agrequirements/get</url-pattern>
   </servlet-mapping>
   
+   <servlet>
+    <servlet-name>ApplicationsService</servlet-name>
+    <servlet-class>com.web.achievetimeline.server.ApplicationsService</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>ApplicationsService</servlet-name>
+    <url-pattern>/applicationsservice/createApplication</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>ApplicationsService</servlet-name>
+    <url-pattern>/applicationsservice/getApplications</url-pattern>
+  </servlet-mapping>
+  
   
   <!-- Default page to serve -->
   <welcome-file-list>

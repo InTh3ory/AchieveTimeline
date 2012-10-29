@@ -182,6 +182,8 @@ function UpdateRequirements() {
 	g_unitone: ag[14]
 	};
 	
+	console.log("Updating Requirements");
+	
 $(function() {
 	$.ajax({
 	  	url: 'agrequirements/update',
@@ -190,7 +192,7 @@ $(function() {
 		data: data,
 	 	success: function(newData) {
 			
-			console.log('success');
+			console.log(newData);
 		}
 	});
 });

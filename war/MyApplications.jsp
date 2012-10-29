@@ -26,6 +26,21 @@
 <head>
     <title>Achieve Timeline</title>    
 </head>
+
+<div id="LightBox">
+	<div class="FormContainer">
+		<div class="ExitButton"></div>
+		<div class="FormTitle Green">New Application</div>		
+		<form id="CreateApplicationForm">
+		<br />
+			<div class="Label">University/College Name</div><input type="text" name="institutionName" value=""><br/><br/>
+			<div class="Label">Program Name</div><input type="text" name="programName" value=""><br/><br/>
+			<div class="Label">Color</div><input type="text" name="colorCode" value=""><br/><br/>
+			<div class="SubmitButton">Create</div>
+		</form>	
+	</div>
+</div>
+
 <body>
 	<div id="NavBar">
 		<div id="NavList"><a href="Dashboard.jsp"><span>Dashboard</span></a><span style="float: right">Logout</span></div>
@@ -167,10 +182,53 @@
 		
 	</div>
 <script>
+$("#NewAppButton").click(function(){
+	$("#LightBox").fadeIn();
+});
+
+$(".SubmitButton").click( function(){
+	var form = $(this).parents('form');
+	var id = $(form).attr("id");
+	
+	switch(id) {
+		
+		case "CreateApplicationForm": 
+			CreateApplication(form);
+		break;
+	}
+
+});
+
+function CreateApplication(form) {
+	var institutionName = $(form).find("input[name='institutionName']").val();
+	var programName = $(form).find("input[name='programName']").val();
+	var colorCode = $(form).find("input[name='colorCode']").val();
+	
+	var data = {institutionName: institutionName, programName: programName, colorCode: colorCode};
+	console.log(data);
+	
+	$.ajax({
+	  	url: '/applicationsservice/createApplication',
+	  	type: 'POST',
+	  	data: data,
+	  	dataType: "json",
+	 	success: function(data) {
+			console.log(data);
+			
+		}
+	});
+	
+}		
+
+
 $(function() {
         var taskBar = $(".TaskProgressBar").progressbar({
             value: 88
         });
+});
+
+$(".ExitButton").click(function(){
+	$("#LightBox").fadeOut(400);
 });
 
 $(".ExpandTasksButton").toggle(function(){
