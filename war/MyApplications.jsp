@@ -22,7 +22,27 @@
 <link rel="stylesheet" type="text/css" href="css/MyApplications.css" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+<script src="js/handlebars.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
+
+<script id="application-template" type="text/x-handlebars-template">
+<div class="Application" style='border: 2px solid <%= "#" %>{{colorCode}}; display: none;'>
+	<div class='SelectionIndicator'></div>
+	<div class='ApplicationHeader' style='border-bottom: 1px solid black;'>
+		<div class='ApplicationTitle'>{{institutionName}}</div>
+		<div class='ProgramName' style='color: <%= "#" %>{{colorCode}};'>{{programName}}</div>
+		<div class="TaskPercent">0% Complete</div>
+		<div class='TaskProgressBar'></div>
+		<div class="TaskActionBar"><div class="NewTaskButton">new task</div><div class="ModifyTaskButton">modify task</div><div class="RemoveTaskButton">remove task</div><div class="ExpandTasksButton">expand tasks</div></div>
+	</div>
+	<div class='TaskListContainer'>
+		<div class='TaskList' style='border-top: 1px solid rgb(70,70,70);'>
+			<div class='EmptyTaskListMessage'>No tasks were found for this application.</div>					
+		</div>					
+	</div>
+</div>
+</script>
+
 <head>
     <title>Achieve Timeline</title>    
 </head>
@@ -182,6 +202,61 @@
 		
 	</div>
 <script>
+AttachEvents();
+
+GetAllApplications();
+
+function GetAllApplications() {
+	$.ajax({
+	  	url: '/applicationsservice/getApplications',
+	  	type: 'GET',
+	 	success: function(applications) {
+			
+			var index = 0;
+			
+			while( index < applications.length) {
+				var data = applications[index];
+				var source   = $("#application-template").html();
+				var template = Handlebars.compile(source);
+				var context = {institutionName: data.propertyMap.institutionName, programName: data.propertyMap.programName, colorCode: data.propertyMap.colorCode};
+				var html    = template(context);
+				
+				$(html).prependTo("#ApplicationsList");
+				
+				var newApplication = $("#ApplicationsList").find(".Application");
+				
+				$(newApplication).fadeIn();
+				$(newApplication).find(".TaskProgressBar").first().progressbar({
+					value: 0
+				});
+			
+				index++;
+			}
+			AttachEvents();
+		}
+	});
+}
+
+function AttachEvents() {
+
+	$(".ExpandTasksButton").toggle(function(){
+		$(this).parents(".Application").find(".TaskList").slideDown();
+		
+		var application = $(this).parents(".Application");
+		ApplicationSelected(application);
+		
+		
+		$(this).text("collapse tasks");
+	}, function() {
+		$(this).parents(".Application").find(".TaskList").slideUp();
+		$(this).text("expand tasks");
+	});
+
+	$(".Application").click(function(){
+		ApplicationSelected(this);
+	});
+}
+
 $("#NewAppButton").click(function(){
 	$("#LightBox").fadeIn();
 });
@@ -205,7 +280,7 @@ function CreateApplication(form) {
 	var colorCode = $(form).find("input[name='colorCode']").val();
 	
 	var data = {institutionName: institutionName, programName: programName, colorCode: colorCode};
-	console.log(data);
+	
 	
 	$.ajax({
 	  	url: '/applicationsservice/createApplication',
@@ -213,8 +288,23 @@ function CreateApplication(form) {
 	  	data: data,
 	  	dataType: "json",
 	 	success: function(data) {
-			console.log(data);
+			$("#LightBox").fadeOut();			
 			
+			var source   = $("#application-template").html();
+			var template = Handlebars.compile(source);
+			var context = {institutionName: data.propertyMap.institutionName, programName: data.propertyMap.programName, colorCode: data.propertyMap.colorCode};
+			var html    = template(context);
+			
+			$(html).prependTo("#ApplicationsList");
+			
+			var newApplication = $("#ApplicationsList").find(".Application");
+			
+			$(newApplication).slideDown();
+			$(newApplication).find(".TaskProgressBar").first().progressbar({
+				value: 0
+			});
+			
+			AttachEvents();
 		}
 	});
 	
@@ -231,22 +321,7 @@ $(".ExitButton").click(function(){
 	$("#LightBox").fadeOut(400);
 });
 
-$(".ExpandTasksButton").toggle(function(){
-	$(this).parents(".Application").find(".TaskList").slideDown();
-	
-	var application = $(this).parents(".Application");
-	ApplicationSelected(application);
-	
-	
-	$(this).text("collapse tasks");
-}, function() {
-	$(this).parents(".Application").find(".TaskList").slideUp();
-	$(this).text("expand tasks");
-});
 
-$(".Application").click(function(){
-	ApplicationSelected(this);
-});
 
 function ApplicationSelected(application) {
 	$(application).css("color", "orange");

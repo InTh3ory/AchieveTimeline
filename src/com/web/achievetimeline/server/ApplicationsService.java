@@ -47,11 +47,12 @@ public class ApplicationsService extends HttpServlet {
         entity.setProperty("institutionName", institutionName);
         entity.setProperty("programName", programName);
         entity.setProperty("colorCode", colorCode);
+        entity.setProperty("userId", userId);
         
 		// Put the entity in the data store.
 		datastore.put(entity);
 		
-		//entity.setProperty("key", KeyFactory.keyToString(entity.getKey()));
+		entity.setProperty("key", KeyFactory.keyToString(entity.getKey()));
 		
 		// Notify the client of success.
 		resp.setContentType("application/json");
@@ -69,7 +70,35 @@ public class ApplicationsService extends HttpServlet {
     }
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) {
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+				
+        String userId = GetUserId();
+        
+		Query q = new Query("Application");
 		
+		PreparedQuery pq = datastore.prepare(q);
+		
+		List<Entity> applications = new ArrayList<Entity>();
+		
+		for (Entity result : pq.asIterable()) {
+			String entry = (String) result.getProperty("userId");
+						
+			if(userId.equals(entry))
+			{
+				result.setProperty("key", KeyFactory.keyToString(result.getKey()));
+				applications.add(result);
+			}			
+		}
+						
+		Gson gson = new Gson();
+		String applicationsJson = gson.toJson(applications);
+		
+		try {
+			resp.setContentType("application/json");
+			resp.getWriter().println(applicationsJson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
