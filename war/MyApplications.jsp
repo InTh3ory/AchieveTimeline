@@ -6,7 +6,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%
-      UserService userService = UserServiceFactory.getUserService();
+    UserService userService = UserServiceFactory.getUserService();
     User user = userService.getCurrentUser();
    
     if (user != null) {
@@ -20,17 +20,19 @@
 <html>
 <link rel="stylesheet" type="text/css" href="css/Layout.css" />
 <link rel="stylesheet" type="text/css" href="css/MyApplications.css" />
+<link type="text/css" rel="stylesheet" href="css/miniColors.css" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
 <script src="js/handlebars.js"></script>
+<script src="js/miniColors.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
 
 <script id="application-template" type="text/x-handlebars-template">
-<div class="Application" style='border: 2px solid <%= "#" %>{{colorCode}}; display: none;'>
+<div class="Application" data-key="{{key}}" style='border: 2px solid {{colorCode}}; display: none;'>
 	<div class='SelectionIndicator'></div>
 	<div class='ApplicationHeader' style='border-bottom: 1px solid black;'>
 		<div class='ApplicationTitle'>{{institutionName}}</div>
-		<div class='ProgramName' style='color: <%= "#" %>{{colorCode}};'>{{programName}}</div>
+		<div class='ProgramName' style='color: {{colorCode}};'>{{programName}}</div>
 		<div class="TaskPercent">0% Complete</div>
 		<div class='TaskProgressBar'></div>
 		<div class="TaskActionBar"><div class="NewTaskButton">new task</div><div class="ModifyTaskButton">modify task</div><div class="RemoveTaskButton">remove task</div><div class="ExpandTasksButton">expand tasks</div></div>
@@ -50,12 +52,23 @@
 <div id="LightBox">
 	<div class="FormContainer">
 		<div class="ExitButton"></div>
-		<div class="FormTitle Green">New Application</div>		
 		<form id="CreateApplicationForm">
+		<div class="FormTitle Green">New Application</div>
 		<br />
-			<div class="Label">University/College Name</div><input type="text" name="institutionName" value=""><br/><br/>
-			<div class="Label">Program Name</div><input type="text" name="programName" value=""><br/><br/>
-			<div class="Label">Color</div><input type="text" name="colorCode" value=""><br/><br/>
+			<div class="Label">University/College Name</div><input type="text" name="institutionName" value="" /><br/><br/>
+			<div class="Label">Program Name</div><input type="text" name="programName" value="" /><br/><br/>
+			<div class="Label">Color</div><input type="text" name="colorCode" value="" /><br/><br/>
+			<div class="SubmitButton">Create</div>
+		</form>	
+		<form id="CreateTaskForm">
+		<div class="FormTitle Green">New Task</div>
+		
+		<br />
+			<div class="Label">Title</div><input type="text" name="taskTitle" value="" /><br/><br/>
+			<div class="Label">Due Date</div><input type="text" name="taskDate" value="" /><br/><br/>
+			<div class="Label">Notes</div><br/>
+			<textarea type="text" name="taskNotes" ></textarea>
+			<input type="text" name="applicationKey" value="" />
 			<div class="SubmitButton">Create</div>
 		</form>	
 	</div>
@@ -216,9 +229,10 @@ function GetAllApplications() {
 			
 			while( index < applications.length) {
 				var data = applications[index];
+				
 				var source   = $("#application-template").html();
 				var template = Handlebars.compile(source);
-				var context = {institutionName: data.propertyMap.institutionName, programName: data.propertyMap.programName, colorCode: data.propertyMap.colorCode};
+				var context = {key: data.propertyMap.key, institutionName: data.propertyMap.institutionName, programName: data.propertyMap.programName, colorCode: data.propertyMap.colorCode};
 				var html    = template(context);
 				
 				$(html).prependTo("#ApplicationsList");
@@ -255,11 +269,32 @@ function AttachEvents() {
 	$(".Application").click(function(){
 		ApplicationSelected(this);
 	});
+	
+	$(".NewTaskButton").click(function(){
+		$("#LightBox").fadeIn();
+		$("#CreateTaskForm").show();
+		$("#CreateTaskForm").siblings("form").each(function(){
+			$(this).hide();
+		});
+		var applicationKey = $(this).parents(".Application").attr("data-key");	
+		
+		if(applicationKey == "") {
+			console.error("Application key was empty!");
+		}
+		
+		$("#CreateTaskForm").find("input[name='applicationKey']").val(applicationKey);
+	});
 }
 
 $("#NewAppButton").click(function(){
 	$("#LightBox").fadeIn();
+	$("#CreateApplicationForm").show();
+	$("#CreateApplicationForm").siblings("form").each(function(){
+		$(this).hide();
+	});
 });
+
+
 
 $(".SubmitButton").click( function(){
 	var form = $(this).parents('form');
@@ -270,9 +305,32 @@ $(".SubmitButton").click( function(){
 		case "CreateApplicationForm": 
 			CreateApplication(form);
 		break;
+		case "CreateTaskForm":
+			CreateTask(form);
+		break;
 	}
 
 });
+
+function CreateTask(form) {
+	var taskTitle = $(form).find("input[name='taskTitle']").val();
+	var taskDate = $(form).find("input[name='taskDate']").val();
+	var taskNotes = $(form).find("input[name='taskNotes']").val();
+	var applicationKey = $(form).find("input[name='applicationKey']").val();
+	
+	var data = {taskTitle: taskTitle, taskDate: taskDate, taskNotes: taskNotes, applicationKey: applicationKey};
+	
+	$.ajax({
+	  	url: '/taskservice/createTask',
+	  	type: 'POST',
+	  	data: data,
+	  	dataType: "json",
+	 	success: function(data) {
+			console.log(data);
+		}
+	});
+	
+}
 
 function CreateApplication(form) {
 	var institutionName = $(form).find("input[name='institutionName']").val();
@@ -292,7 +350,7 @@ function CreateApplication(form) {
 			
 			var source   = $("#application-template").html();
 			var template = Handlebars.compile(source);
-			var context = {institutionName: data.propertyMap.institutionName, programName: data.propertyMap.programName, colorCode: data.propertyMap.colorCode};
+			var context = {key: data.propertyMap.key, institutionName: data.propertyMap.institutionName, programName: data.propertyMap.programName, colorCode: data.propertyMap.colorCode};
 			var html    = template(context);
 			
 			$(html).prependTo("#ApplicationsList");
@@ -315,6 +373,8 @@ $(function() {
         var taskBar = $(".TaskProgressBar").progressbar({
             value: 88
         });
+		
+		$("input[name='colorCode']").miniColors();
 });
 
 $(".ExitButton").click(function(){
