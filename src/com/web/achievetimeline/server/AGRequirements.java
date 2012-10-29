@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -36,39 +37,19 @@ public class AGRequirements extends HttpServlet {
         User user = userService.getCurrentUser();
         String userId = user.getUserId();
         
-        System.out.println("UserID: " + userId);
-        
-        String keyStr = req.getParameter("key");
-        String a_unitone = req.getParameter("a_unitone");    // TODO: Use a for loop for iterating through all parameters, Ras
-        String a_unittwo = req.getParameter("a_unittwo");
-        
-        String b_unitone = req.getParameter("b_unitone");
-        String b_unittwo = req.getParameter("b_unittwo");
-        String b_unitthree = req.getParameter("b_unitthree");
-        String b_unitfour = req.getParameter("b_unitfour");
-        
-        String c_unitone = req.getParameter("c_unitone");
-        String c_unittwo = req.getParameter("c_unittwo");
-        String c_unitthree = req.getParameter("c_unitthree");
-
-
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Entity entity = new Entity("AGRequirements", userId);
-        	
-        entity.setProperty("userId", userId);
-        entity.setProperty("a_unitone", a_unitone);
-		entity.setProperty("a_unittwo", a_unittwo);
-		
-		entity.setProperty("b_unitone", b_unitone);
-		entity.setProperty("b_unittwo", b_unittwo);
-		entity.setProperty("b_unitthree", b_unitthree);
-		entity.setProperty("b_unitfour", b_unitfour);
-
-		entity.setProperty("c_unitone", c_unitone);
-		entity.setProperty("c_unittwo", c_unittwo);
-		entity.setProperty("c_unitthree", c_unitthree);
-		
-		// Put the entity in the data store.
+        Enumeration enumeration = req.getParameterNames();
+        
+        for( ; enumeration.hasMoreElements(); )
+        {
+        	String param = (String)enumeration.nextElement();
+        	System.out.print(param);
+        	System.out.println(" " + req.getParameter(param));
+        	entity.setProperty(param, req.getParameter(param));
+        }
+        
+        // Put the entity in the data store.
         datastore.put(entity);
         
         // Notify the client of success.
@@ -96,8 +77,7 @@ public class AGRequirements extends HttpServlet {
 			resp.getWriter().println(json);
 			
 		} catch (EntityNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// Don't do anything if there are no entries in the datastore.
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
