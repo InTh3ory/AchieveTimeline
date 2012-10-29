@@ -77,24 +77,30 @@ public class AGRequirements extends HttpServlet {
         String json = gson.toJson(entity);
         resp.getWriter().println(json);
 	}
-	
-public void doGet(HttpServletRequest req, HttpServletResponse resp) {
-	
-	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	
-	UserService userService = UserServiceFactory.getUserService();
-	User user = userService.getCurrentUser();
-    String userId = user.getUserId();
-    
-    Gson gson = new Gson();
-	String json = gson.toJson(userId);
-    
-    try {
-		resp.setContentType("application/json");
-		resp.getWriter().println(json);
-	} catch (IOException e) {
-		e.printStackTrace();
-	}
-	
+
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) {
+
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
+		UserService userService = UserServiceFactory.getUserService();
+		User user = userService.getCurrentUser();
+		String userId = user.getUserId();
+
+		try {
+			Entity entity = datastore.get(KeyFactory.createKey("AGRequirements", userId));
+			
+			Gson gson = new Gson();
+			String json = gson.toJson(entity);
+			
+			resp.setContentType("application/json");
+			resp.getWriter().println(json);
+			
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
