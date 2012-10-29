@@ -31,13 +31,11 @@ public class ApplicationsService extends HttpServlet {
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 				
-        String userId = GetUserId();
+		String userId = GetUserId();
         
         String institutionName = req.getParameter("institutionName");
         String programName = req.getParameter("programName");
         String colorCode = req.getParameter("colorCode");
-        
-        
         
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         
@@ -52,7 +50,7 @@ public class ApplicationsService extends HttpServlet {
 		// Put the entity in the data store.
 		datastore.put(entity);
 		
-		entity.setProperty("key", KeyFactory.keyToString(entity.getKey()));
+		//entity.setProperty("key", KeyFactory.keyToString(entity.getKey()));
 		
 		// Notify the client of success.
 		resp.setContentType("application/json");
@@ -101,4 +99,33 @@ public class ApplicationsService extends HttpServlet {
 		}
 	}
 
+	public void doDelete(HttpServletRequest req, HttpServletResponse resp) {
+		
+		String userId = GetUserId();
+        
+        String institutionName = req.getParameter("institutionName");
+        String programName = req.getParameter("programName");
+        String colorCode = req.getParameter("colorCode");
+        
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        
+        // Create an entity to store event properties.
+        Entity entity = new Entity("Application", userId);
+        
+        // TODO: Create a better query (all params will form a unique key), Ras
+        Query q = new Query("Application");
+		
+		PreparedQuery pq = datastore.prepare(q);
+		List<Entity> applications = new ArrayList<Entity>();
+		
+		/*for (Entity result : pq.asIterable()) {
+			String entry = (String) result.getProperty("userId");
+						
+			if(userId.equals(entry))
+			{
+				System.out.println("Deleting key " + KeyFactory.keyToString(result.getKey()));
+				datastore.delete(result.getKey());
+			}			
+		}*/
+	}
 }

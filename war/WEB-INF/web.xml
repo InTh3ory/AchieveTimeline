@@ -31,6 +31,11 @@
     <url-pattern>/applicationsservice/getApplications</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+    <servlet-name>ApplicationsService</servlet-name>
+    <url-pattern>/applicationsservice/deleteApplication</url-pattern>
+  </servlet-mapping>
+  
   
   <!-- Default page to serve -->
   <welcome-file-list>

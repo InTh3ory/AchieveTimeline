@@ -294,7 +294,30 @@ $("#NewAppButton").click(function(){
 	});
 });
 
-
+$("#RemoveAppButton").click(function(){
+	var form = $(this).parents('form');
+	if(null == form) // TODO: Detect whether an application was selected, Ras
+	{
+		console.log("No application was selected");
+		return;
+	}
+	
+	var institutionName = $(form).find("input[name='institutionName']").val();
+	var programName = $(form).find("input[name='programName']").val();
+	var colorCode = $(form).find("input[name='colorCode']").val();
+	
+	var data = {institutionName: institutionName, programName: programName, colorCode: colorCode};
+	
+	$.ajax({
+	  	url: '/applicationsservice/deleteApplication',
+	  	type: 'DELETE',
+	  	data: data,
+	  	dataType: "json",
+	 	success: function(data) {
+			console.log(data);
+		}
+	});
+});
 
 $(".SubmitButton").click( function(){
 	var form = $(this).parents('form');
