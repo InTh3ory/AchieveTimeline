@@ -36,6 +36,8 @@ public class AGRequirements extends HttpServlet {
         User user = userService.getCurrentUser();
         String userId = user.getUserId();
         
+        System.out.println("UserID: " + userId);
+        
         String keyStr = req.getParameter("key");
         String a_unitone = req.getParameter("a_unitone");    // TODO: Use a for loop for iterating through all parameters, Ras
         String a_unittwo = req.getParameter("a_unittwo");
@@ -44,31 +46,15 @@ public class AGRequirements extends HttpServlet {
         String b_unittwo = req.getParameter("b_unittwo");
         String b_unitthree = req.getParameter("b_unitthree");
         String b_unitfour = req.getParameter("b_unitfour");
+        
+        String c_unitone = req.getParameter("c_unitone");
+        String c_unittwo = req.getParameter("c_unittwo");
+        String c_unitthree = req.getParameter("c_unitthree");
 
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        Entity entity;
-        
-        if (keyStr != null) {
-        	System.out.println(keyStr);
+        Entity entity = new Entity("AGRequirements", userId);
         	
-        	try {
-				entity = datastore.get(KeyFactory.stringToKey(keyStr));
-			} catch (EntityNotFoundException e) {
-				System.out.println("Event not updated, event " + keyStr + " not found: " + e);
-				return;
-			}
-        } else
-        {
-        	entity = new Entity("AGRequirements");
-        	//Key key = entity.getKey();
-        	//if(null != key)
-        		//System.out.println("Creating new entity: " + KeyFactory.keyToString(key));
-        }
-        
-        //Key key = entity.getKey();
-        
-        
         entity.setProperty("userId", userId);
         entity.setProperty("a_unitone", a_unitone);
 		entity.setProperty("a_unittwo", a_unittwo);
@@ -77,13 +63,14 @@ public class AGRequirements extends HttpServlet {
 		entity.setProperty("b_unittwo", b_unittwo);
 		entity.setProperty("b_unitthree", b_unitthree);
 		entity.setProperty("b_unitfour", b_unitfour);
-		//entity.setProperty("key", KeyFactory.keyToString(entity.getKey()));
-		
+
+		entity.setProperty("c_unitone", c_unitone);
+		entity.setProperty("c_unittwo", c_unittwo);
+		entity.setProperty("c_unitthree", c_unitthree);
 		
 		// Put the entity in the data store.
         datastore.put(entity);
-        //entity.setProperty("key", KeyFactory.keyToString(entity.getKey()));
-
+        
         // Notify the client of success.
         resp.setContentType("application/json");
         Gson gson = new Gson();
