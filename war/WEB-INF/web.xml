@@ -31,28 +31,32 @@
     <url-pattern>/applicationsservice/getApplications</url-pattern>
   </servlet-mapping>
   
-
-   <servlet>
-    <servlet-name>TaskService</servlet-name>
-    <servlet-class>com.web.achievetimeline.server.TaskService</servlet-class>
-  </servlet>
-  
-   <servlet-mapping>
-    <servlet-name>TaskService</servlet-name>
-    <url-pattern>/taskservice/createTask</url-pattern>
-  </servlet-mapping>
-  
-  
-  
-
   <servlet-mapping>
     <servlet-name>ApplicationsService</servlet-name>
     <url-pattern>/applicationsservice/deleteApplication</url-pattern>
   </servlet-mapping>
   
-
+  <servlet>
+   <servlet-name>TaskService</servlet-name>
+   <servlet-class>com.web.achievetimeline.server.TasksService</servlet-class>
+  </servlet>
   
-  <!-- Default page to serve -->
+  <servlet-mapping>
+   <servlet-name>TaskService</servlet-name>
+   <url-pattern>/taskservice/createTask</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+   <servlet-name>TaskService</servlet-name>
+   <url-pattern>/taskservice/getTasks</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+   <servlet-name>TaskService</servlet-name>
+   <url-pattern>/taskservice/deleteTask</url-pattern>
+  </servlet-mapping>  
+
+    <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>Dashboard.jsp</welcome-file>
   </welcome-file-list>
