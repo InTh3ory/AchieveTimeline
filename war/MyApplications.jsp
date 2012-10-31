@@ -240,7 +240,7 @@ function GetAllApplications() {
 			
 			while( index < applications.length) {
 				var data = applications[index];
-				
+				console.log(data);
 				var source   = $("#application-template").html();
 				var template = Handlebars.compile(source);
 				var context = {key: data.propertyMap.key, institutionName: data.propertyMap.institutionName, programName: data.propertyMap.programName, colorCode: data.propertyMap.colorCode};

@@ -67,6 +67,9 @@ public class ApplicationsService extends HttpServlet {
 		
 		System.out.println("entity persisted: "+KeyFactory.keyToString(entity.getKey()));
 		
+		entity.setProperty("key", KeyFactory.keyToString(entity.getKey()));
+		
+		
 		// Notify the client of success.
 		resp.setContentType("application/json");
 		
