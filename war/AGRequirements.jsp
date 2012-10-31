@@ -34,7 +34,7 @@
 		<div class="Widget">
 			<a href="AGRequirements.jsp"><div class="WidgetTitle AGTitle">My "A-G"<br /> Requirements</div></a>
 			<div class="WidgetContent">
-				<div id="ProgressBarTitle">Percentage Of Requirements Complete: 88%</div>
+				<div id="ProgressBarTitle">Percentage Of Requirements Complete: <span id="PercentComplete">88</span>%</div>
 				<div id="ProgressBar"></div>
 			</div>
 		</div>
@@ -106,6 +106,33 @@
 	</div>
 <script>
 
+function CalculatePercentageComplete() {
+	
+	var total = 0;
+	var completed = 0;
+	
+	$(".CompletedButton").each(function(){
+		
+		total++;
+		var isComplete = $(this).hasClass("Completed");
+			
+		if(isComplete) {
+			completed++;
+		}
+	}); 
+	
+	console.log(completed);
+	var percent = Math.round((completed / total) * 100);
+	
+		$("#ProgressBar").progressbar({
+            value: percent
+        });
+	
+		$("#PercentComplete").html(percent);
+	
+}
+
+
 $(".CompletedButton").click(function(){
 
 	var isCompleted = $(this).hasClass("Completed");
@@ -124,14 +151,12 @@ $(".CompletedButton").click(function(){
 	}
 	
 	UpdateRequirements();
-
+	CalculatePercentageComplete();
 	
 });
 
 $(function() {
-        $("#ProgressBar").progressbar({
-            value: 88
-        });
+        
 		
 		GetRequirementsValues();
 });
@@ -156,7 +181,9 @@ function GetRequirementsValues() {
 					text = text.replace("Incomplete", "Complete");
 					$(this).parents(".UnitCompletion").find("span[data-spanId='"+spanId+"']").text(text);					
 				}
-			});			
+			});
+
+			CalculatePercentageComplete();			
 		}
 	});
 });
