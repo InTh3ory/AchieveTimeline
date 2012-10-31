@@ -24,6 +24,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.google.appengine.api.datastore.Query.SortDirection;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
@@ -45,7 +46,7 @@ public class ApplicationsService extends HttpServlet {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Entity entity;
         
-        if(0 != key.length())
+        if(null != key)
         {
         	// We are updating an existing entity.
         	entity = new Entity(KeyFactory.stringToKey(key));
@@ -85,9 +86,10 @@ public class ApplicationsService extends HttpServlet {
 				
         // Grab all applications belonging to the user from the datastore.
         Filter f = new FilterPredicate("userId", FilterOperator.EQUAL, GetUserId());
-        Query q = new Query("Application").setFilter(f);
+        Query q = new Query("Application").setFilter(f).addSort("institutionName", SortDirection.DESCENDING);;
 		
 		PreparedQuery pq = datastore.prepare(q);
+		System.out.println("ApplicationsService::doGet - Number of applications: " + pq.countEntities());
 		
 		List<Entity> applications = new ArrayList<Entity>();
 		
@@ -113,26 +115,33 @@ public class ApplicationsService extends HttpServlet {
         
         String institutionName = req.getParameter("institutionName");
         String programName = req.getParameter("programName");
-        String key = req.getParameter("key");
+        String keyStr = req.getParameter("key");
         
-        //System.out.println("ApplicationsService::doDelete(institutionName=" + institutionName + ", programName=" + programName + ")");
+        System.out.print("ApplicationsService::doDelete(");
+        System.out.print("institutionName=" + institutionName + ", programName=" + programName + ", key=" + keyStr + ")");
         
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         
-        if(!key.isEmpty())
+        // Grab all applications belonging to the user from the datastore.
+        Filter f = new FilterPredicate("userId", FilterOperator.EQUAL, userId);
+        Query q = new Query("Application").setFilter(f);
+		
+		PreparedQuery pq = datastore.prepare(q);
+        
+		if(null != keyStr)
         {
-        	// TODO: Make sure that we are deleting an entity that belongs to the user - Ras, Oct. 2012
-        	datastore.delete(KeyFactory.stringToKey(key));
+			Key key = KeyFactory.stringToKey(keyStr);
+			for (Entity result : pq.asIterable()) {
+				if(key == result.getKey())
+				{
+					System.out.println("Deleting application " + keyStr);
+					datastore.delete(key);
+				}
+			}
         }
         else
         {
-	        // Grab all applications belonging to the user from the datastore.
-	        Filter f = new FilterPredicate("userId", FilterOperator.EQUAL, userId);
-	        Query q = new Query("Application").setFilter(f);
-			
-			PreparedQuery pq = datastore.prepare(q);
-			
-			for (Entity result : pq.asIterable()) {
+	     	for (Entity result : pq.asIterable()) {
 				System.out.println("Result.institutionName=" + result.getProperty("institutionName"));
 				System.out.println("Result.programName=" + result.getProperty("programName"));
 				
