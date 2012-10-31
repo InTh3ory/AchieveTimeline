@@ -62,13 +62,22 @@
 		</form>	
 		
 		<form id="ModifyApplicationForm">
-		<div class="FormTitle Green">Modify Application</div>
+		<div class="FormTitle Green">Update Application</div>
 		<br />
 			<div class="Label">University/College Name</div><input type="text" name="institutionName" value="" /><br/><br/>
 			<div class="Label">Program Name</div><input type="text" name="programName" value="" /><br/><br/>
 			<div class="Label">Color</div><input type="text" name="colorCode" value="" /><br/><br/>
 			<input type="text" name="key" value="" />
-			<div class="SubmitButton">Create</div>
+			<div class="SubmitButton">Update</div>
+		</form>	
+		
+		<form id="DeleteApplicationForm">
+		<div class="FormTitle Green">Delete This Application?</div>
+		<br />
+			<div class="Label">University/College Name</div><input type="text" name="institutionName" value="" /><br/><br/>	
+			<div class="Label">Program Name</div><input type="text" name="programName" value="" /><br/><br/>			
+			<input type="text" name="key" value="" />
+			<div class="SubmitButton">Confirm Delete</div>
 		</form>	
 		
 		<form id="CreateTaskForm">
@@ -329,28 +338,18 @@ $("#ModifyAppButton").click(function(){
 });
 
 $("#RemoveAppButton").click(function(){
-	var form = $(this).parents('form');
-	if(null == form) // TODO: Detect whether an application was selected, Ras
-	{
-		console.log("No application was selected");
-		return;
+	var key = $("#DeleteApplicationForm").find("input[name='key']").val();
+	
+	if(key != null & key != "") {
+
+		$("#LightBox").fadeIn();
+		$("#DeleteApplicationForm").show();	
+		
+		$("#DeleteApplicationForm").siblings("form").each(function(){
+			$(this).hide();
+		});
 	}
-	
-	var institutionName = $(form).find("input[name='institutionName']").val();
-	var programName = $(form).find("input[name='programName']").val();
-	var colorCode = $(form).find("input[name='colorCode']").val();
-	
-	var data = {institutionName: institutionName, programName: programName, colorCode: colorCode};
-	
-	$.ajax({
-	  	url: '/applicationsservice/deleteApplication',
-	  	type: 'DELETE',
-	  	data: data,
-	  	dataType: "json",
-	 	success: function(data) {
-			console.log(data);
-		}
-	});
+
 });
 
 $(".SubmitButton").click( function(){
@@ -365,6 +364,10 @@ $(".SubmitButton").click( function(){
 		case "ModifyApplicationForm":
 			ModifyApplication(form);
 		break;
+		case "DeleteApplicationForm":
+			DeleteApplication(form);
+		break;
+		
 		case "CreateTaskForm":
 			CreateTask(form);
 		break;
@@ -391,6 +394,27 @@ function CreateTask(form) {
 		}
 	});
 	
+}
+
+function DeleteApplication(form) {
+	var institutionName = $(form).find("input[name='institutionName']").val();
+	var programName = $(form).find("input[name='programName']").val();	
+	var key = $(form).find("input[name='key']").val();
+	
+	var data = {key: key, institutionName: institutionName, programName: programName};
+	console.log(key);
+	//TODO refactor to use put
+	$.ajax({
+	  	url: '/applicationsservice/deleteApplication',
+	  	type: 'DELETE',
+	  	data: data,
+	  	dataType: "json",
+	 	success: function(data) {
+			console.log(data);
+			$("#ApplicationsList").find(".Application[data-key='" + data.propertyMap.key + "']").remove();		
+			$("#LightBox").fadeOut();			
+		}
+	});
 }
 
 function ModifyApplication(form) {
@@ -510,6 +534,9 @@ function ApplicationSelected(application) {
 	$("#ModifyApplicationForm").find("input[name='colorCode']").val(colorCode);
 	$("#ModifyApplicationForm").find("input[name='key']").val(key);
 	
+	$("#DeleteApplicationForm").find("input[name='institutionName']").val(institutionTitle);
+	$("#DeleteApplicationForm").find("input[name='programName']").val(programName);
+	$("#DeleteApplicationForm").find("input[name='key']").val(key);
 	
 	
 }
