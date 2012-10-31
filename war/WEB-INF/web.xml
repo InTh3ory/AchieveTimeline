@@ -31,6 +31,7 @@
     <url-pattern>/applicationsservice/getApplications</url-pattern>
   </servlet-mapping>
   
+
    <servlet>
     <servlet-name>TaskService</servlet-name>
     <servlet-class>com.web.achievetimeline.server.TaskService</servlet-class>
@@ -43,6 +44,13 @@
   
   
   
+
+  <servlet-mapping>
+    <servlet-name>ApplicationsService</servlet-name>
+    <url-pattern>/applicationsservice/deleteApplication</url-pattern>
+  </servlet-mapping>
+  
+
   
   <!-- Default page to serve -->
   <welcome-file-list>
