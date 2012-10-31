@@ -154,7 +154,7 @@ body {
 }
 
 #RemoveAppButton  {
-
+	
 	border: 1px solid #FB353A;
 	border-radius: 4px;
 	text-align: center;
@@ -262,7 +262,7 @@ body {
 
 .ModifyTaskButton {
 	border: 1px solid #138DFF;
-
+	
 	border-radius: 4px;
 	text-align: center;
 	padding: 6px;

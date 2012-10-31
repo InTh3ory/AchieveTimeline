@@ -28,7 +28,7 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
 
 <script id="application-template" type="text/x-handlebars-template">
-<div class="Application" data-key="{{key}}" style='border: 2px solid {{colorCode}}; display: none;'>
+<div class="Application" data-key="{{key}}" style='border: 2px solid {{colorCode}}; display: none;' data-institutionTitle='{{institutionName}}' data-programName='{{programName}}' data-colorCode='{{colorCode}}'>
 	<div class='SelectionIndicator'></div>
 	<div class='ApplicationHeader' style='border-bottom: 1px solid black;'>
 		<div class='ApplicationTitle'>{{institutionName}}</div>
@@ -60,6 +60,17 @@
 			<div class="Label">Color</div><input type="text" name="colorCode" value="" /><br/><br/>
 			<div class="SubmitButton">Create</div>
 		</form>	
+		
+		<form id="ModifyApplicationForm">
+		<div class="FormTitle Green">Modify Application</div>
+		<br />
+			<div class="Label">University/College Name</div><input type="text" name="institutionName" value="" /><br/><br/>
+			<div class="Label">Program Name</div><input type="text" name="programName" value="" /><br/><br/>
+			<div class="Label">Color</div><input type="text" name="colorCode" value="" /><br/><br/>
+			<input type="text" name="key" value="" />
+			<div class="SubmitButton">Create</div>
+		</form>	
+		
 		<form id="CreateTaskForm">
 		<div class="FormTitle Green">New Task</div>
 		
@@ -272,7 +283,8 @@ function AttachEvents() {
 	
 	$(".NewTaskButton").click(function(){
 		$("#LightBox").fadeIn();
-		$("#CreateTaskForm").show();
+		$("#CreateTaskForm").show();		
+		
 		$("#CreateTaskForm").siblings("form").each(function(){
 			$(this).hide();
 		});
@@ -289,9 +301,31 @@ function AttachEvents() {
 $("#NewAppButton").click(function(){
 	$("#LightBox").fadeIn();
 	$("#CreateApplicationForm").show();
+	
+	$("#CreateApplicationForm").find("input").each(function(){
+		$(this).val("");
+	});
+	
+	
 	$("#CreateApplicationForm").siblings("form").each(function(){
 		$(this).hide();
 	});
+});
+
+
+$("#ModifyAppButton").click(function(){
+
+	var key = $("#ModifyApplicationForm").find("input[name='key']").val();
+	
+	if(key != null & key != "") {
+
+		$("#LightBox").fadeIn();
+		$("#ModifyApplicationForm").show();	
+		
+		$("#ModifyApplicationForm").siblings("form").each(function(){
+			$(this).hide();
+		});
+	}
 });
 
 $("#RemoveAppButton").click(function(){
@@ -328,6 +362,9 @@ $(".SubmitButton").click( function(){
 		case "CreateApplicationForm": 
 			CreateApplication(form);
 		break;
+		case "ModifyApplicationForm":
+			ModifyApplication(form);
+		break;
 		case "CreateTaskForm":
 			CreateTask(form);
 		break;
@@ -356,6 +393,45 @@ function CreateTask(form) {
 	
 }
 
+function ModifyApplication(form) {
+	var institutionName = $(form).find("input[name='institutionName']").val();
+	var programName = $(form).find("input[name='programName']").val();
+	var colorCode = $(form).find("input[name='colorCode']").val();
+	var key = $(form).find("input[name='key']").val();
+	
+	var data = {key: key, institutionName: institutionName, programName: programName, colorCode: colorCode};
+	console.log(key);
+	//TODO refactor to use put
+	$.ajax({
+	  	url: '/applicationsservice/createApplication',
+	  	type: 'POST',
+	  	data: data,
+	  	dataType: "json",
+	 	success: function(data) {
+			console.log(data);
+			$("#ApplicationsList").find(".Application[data-key='" + data.propertyMap.key + "']").remove();
+		
+			$("#LightBox").fadeOut();			
+			
+			var source   = $("#application-template").html();
+			var template = Handlebars.compile(source);
+			var context = {key: data.propertyMap.key, institutionName: data.propertyMap.institutionName, programName: data.propertyMap.programName, colorCode: data.propertyMap.colorCode};
+			var html    = template(context);
+			
+			$(html).prependTo("#ApplicationsList");
+			
+			var newApplication = $("#ApplicationsList").find(".Application");
+			
+			$(newApplication).slideDown();
+			$(newApplication).find(".TaskProgressBar").first().progressbar({
+				value: 0
+			});
+			
+			AttachEvents();
+		}
+	});
+}
+
 function CreateApplication(form) {
 	var institutionName = $(form).find("input[name='institutionName']").val();
 	var programName = $(form).find("input[name='programName']").val();
@@ -370,6 +446,7 @@ function CreateApplication(form) {
 	  	data: data,
 	  	dataType: "json",
 	 	success: function(data) {
+			console.log(data);
 			$("#LightBox").fadeOut();			
 			
 			var source   = $("#application-template").html();
@@ -422,6 +499,19 @@ function ApplicationSelected(application) {
 			left: -90
 		});
 	});
+	
+	var institutionTitle = $(application).attr("data-institutionTitle");
+	var programName = $(application).attr("data-programName");
+	var colorCode = $(application).attr("data-colorCode");
+	var key = $(application).attr("data-key");
+	
+	$("#ModifyApplicationForm").find("input[name='institutionName']").val(institutionTitle);
+	$("#ModifyApplicationForm").find("input[name='programName']").val(programName);
+	$("#ModifyApplicationForm").find("input[name='colorCode']").val(colorCode);
+	$("#ModifyApplicationForm").find("input[name='key']").val(key);
+	
+	
+	
 }
 
 </script>
