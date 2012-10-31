@@ -136,16 +136,30 @@ $(function() {
 		GetRequirementsValues();
 });
 
+//TODO clean this up
 function GetRequirementsValues() {
 	$(function() {
 	$.ajax({
 	  	url: 'agrequirements/get',
 	  	type: 'GET',
-	  	dataType: "json",
-	 	success: function(data) {
-			console.log(data);
+	  	dataType: "json",	 	
+		success: function(data) {
+			
+			var completedArray = [];
+			
+			for( value in data.propertyMap) {
+				completedArray.push(data.propertyMap[value]);
+			}	
+			
 			$(".CompletedButton").each(function(index, element){
-				
+				if(completedArray[index] == "true") {
+					var spanId = $(this).attr("data-spanId");
+					$(this).addClass("Completed");
+					var text = $(this).parents(".UnitCompletion").find("span[data-spanId='"+spanId+"']").text();
+					text = text.replace("Incomplete", "Complete");
+					$(this).parents(".UnitCompletion").find("span[data-spanId='"+spanId+"']").text(text);
+					
+				}
 			});
 			
 		}
@@ -193,6 +207,7 @@ $(function() {
 	  	type: 'POST',
 	  	dataType: "json",
 		data: data,
+		async: false,
 	 	success: function(newData) {
 			
 			console.log(newData);
