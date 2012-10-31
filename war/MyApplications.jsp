@@ -397,17 +397,17 @@ function CreateTask(form) {
 }
 
 function DeleteApplication(form) {
+
 	var institutionName = $(form).find("input[name='institutionName']").val();
 	var programName = $(form).find("input[name='programName']").val();	
 	var key = $(form).find("input[name='key']").val();
 	
-	var data = {key: key, institutionName: institutionName, programName: programName};
-	console.log(key);
+	//var data = {key: key, institutionName: institutionName, programName: programName};
+	var data = "?key=" + key + "&institutionName=" + institutionName + "&programName=" + programName;
 	//TODO refactor to use put
 	$.ajax({
-	  	url: '/applicationsservice/deleteApplication',
+	  	url: '/applicationsservice/deleteApplication' + data,
 	  	type: 'DELETE',
-	  	data: data,
 	  	dataType: "json",
 	 	success: function(data) {
 			console.log(data);

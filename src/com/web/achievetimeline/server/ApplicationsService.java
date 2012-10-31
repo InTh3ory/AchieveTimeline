@@ -135,10 +135,13 @@ public class ApplicationsService extends HttpServlet {
 		
 		if(null != keyStr)
         {
+			System.out.println("Key is not null");
 			Key key = KeyFactory.stringToKey(keyStr);
 			for (Entity result : pq.asIterable()) {
+				System.out.println(KeyFactory.keyToString(key));
+				System.out.println(KeyFactory.keyToString(result.getKey()));
 				if(key == result.getKey())
-				{
+				{					
 					System.out.println("Deleting application " + keyStr);
 					application.setProperty("key", KeyFactory.keyToString(key));
 					datastore.delete(key);
