@@ -136,7 +136,7 @@ $(function() {
 		GetRequirementsValues();
 });
 
-//TODO clean this up
+//Terrible implementation...must refactor
 function GetRequirementsValues() {
 	$(function() {
 	$.ajax({
@@ -144,29 +144,40 @@ function GetRequirementsValues() {
 	  	type: 'GET',
 	  	dataType: "json",	 	
 		success: function(data) {
-			
-			var completedArray = [];
-			
-			for( value in data.propertyMap) {
-				completedArray.push(data.propertyMap[value]);
-			}	
+		
+			var objectKeys = keys(data.propertyMap);
+			objectKeys.sort();			
 			
 			$(".CompletedButton").each(function(index, element){
-				if(completedArray[index] == "true") {
+				if(data.propertyMap[objectKeys[index]] == "true") {					
 					var spanId = $(this).attr("data-spanId");
-					$(this).addClass("Completed");
+					$(this).addClass("Completed");					
 					var text = $(this).parents(".UnitCompletion").find("span[data-spanId='"+spanId+"']").text();
 					text = text.replace("Incomplete", "Complete");
-					$(this).parents(".UnitCompletion").find("span[data-spanId='"+spanId+"']").text(text);
-					
+					$(this).parents(".UnitCompletion").find("span[data-spanId='"+spanId+"']").text(text);					
 				}
-			});
-			
+			});			
 		}
 	});
 });
 	
 }
+
+function keys(obj)
+{
+    var keys = [];
+
+    for(var key in obj)
+    {
+        if(obj.hasOwnProperty(key))
+        {
+            keys.push(key);
+        }
+    }
+
+    return keys;
+}
+
 
 function UpdateRequirements() {
 	var ag = [];
@@ -182,21 +193,21 @@ function UpdateRequirements() {
 	});
 	
 	
-	var data = {a_unitone: ag[0],
-	a_unittwo: ag[1],
-	b_unitone: ag[2],
-	b_unittwo: ag[3],
-	b_unitthree: ag[4],
-	b_unitfour: ag[5],
-	c_unitone: ag[6],
-	c_unittwo: ag[7],
-	c_unitthree: ag[8],
-	d_unitone: ag[9],
-	d_unittwo: ag[10],
-	e_unitone: ag[11],
-	e_unittwo: ag[12],
-	f_unitone: ag[13],
-	g_unitone: ag[14]
+	var data = {a: ag[0],
+	b: ag[1],
+	c: ag[2],
+	d: ag[3],
+	e: ag[4],
+	f: ag[5],
+	g: ag[6],
+	h: ag[7],
+	i: ag[8],
+	j: ag[9],
+	k: ag[10],
+	l: ag[11],
+	m: ag[12],
+	n: ag[13],
+	o: ag[14]
 	};
 	
 	console.log("Updating Requirements");
