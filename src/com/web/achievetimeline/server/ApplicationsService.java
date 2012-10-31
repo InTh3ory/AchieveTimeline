@@ -65,10 +65,10 @@ public class ApplicationsService extends HttpServlet {
 		// Put the entity in the data store.
 		datastore.put(entity);
 		
-		System.out.println("entity persisted: "+KeyFactory.keyToString(entity.getKey()));
-		
+		// This line adds a new column 'key' to the returned entity, not the persisted one.
 		entity.setProperty("key", KeyFactory.keyToString(entity.getKey()));
 		
+		System.out.println("entity persisted: "+KeyFactory.keyToString(entity.getKey()));
 		
 		// Notify the client of success.
 		resp.setContentType("application/json");
@@ -131,6 +131,8 @@ public class ApplicationsService extends HttpServlet {
 		
 		PreparedQuery pq = datastore.prepare(q);
         
+		Entity application = null;
+		
 		if(null != keyStr)
         {
 			Key key = KeyFactory.stringToKey(keyStr);
@@ -138,11 +140,12 @@ public class ApplicationsService extends HttpServlet {
 				if(key == result.getKey())
 				{
 					System.out.println("Deleting application " + keyStr);
+					application.setProperty("key", KeyFactory.keyToString(key));
 					datastore.delete(key);
 				}
 			}
         }
-        else
+        /*else
         {
 	     	for (Entity result : pq.asIterable()) {
 				System.out.println("Result.institutionName=" + result.getProperty("institutionName"));
@@ -155,6 +158,16 @@ public class ApplicationsService extends HttpServlet {
 					datastore.delete(result.getKey());
 				}
 			}
-        }
+        }*/
+		
+		Gson gson = new Gson();
+		String applicationsJson = gson.toJson(application);
+		
+		try {
+			resp.setContentType("application/json");
+			resp.getWriter().println(applicationsJson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
