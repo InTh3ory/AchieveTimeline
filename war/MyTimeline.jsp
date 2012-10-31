@@ -33,7 +33,7 @@
 	<div id="Content">
 		<div id="TimelineDash"><div id="WeekButton" class="Active">Week</div><div id="MonthButton" class="InActive">Month</div><div id="ListButton" class="InActive">List</div></div>
 		
-		<div id="WeekView" style='display: none;'>
+		<div id="WeekView" >
 				<div class='WeekDay First'>
 					<div class='CalendarDay'>
 						<div class='Divider'></div>
@@ -55,7 +55,7 @@
 						Dance like I have never danced before.
 					</div>
 					<div class="Task Orange">
-						Yell at the wall.
+						Test.
 					</div>
 				</div>
 				
@@ -74,7 +74,7 @@
 						<div class='Number'></div>
 					</div>
 					<div class="Task Orange">
-						Yell at the wall.
+						Jump and dance.
 					</div>
 				</div>
 				
@@ -85,7 +85,7 @@
 						<div class='Number'></div>
 					</div>
 					<div class="Task Blue">
-						Pee on the Beta house. 
+						Impress Google. 
 					</div>
 				</div>
 				
@@ -116,7 +116,7 @@
 						Call that person about that thing.
 					</div>
 					<div class="Task Orange">
-						Yell at the wall.
+						Jump up and down.
 					</div>
 			</div>
 			<div class="MonthDay" style="top: 0px; left: 160px;">
@@ -130,7 +130,7 @@
 			</div>
 		</div>
 		
-		<div id="ListView">
+		<div id="ListView" style='display: none;'>
 			<div class='ListItem'>
 				<div class='DateTitle'>
 					Sunday Oct 28, 2012

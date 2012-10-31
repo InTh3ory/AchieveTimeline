@@ -31,6 +31,18 @@
     <url-pattern>/applicationsservice/getApplications</url-pattern>
   </servlet-mapping>
   
+   <servlet>
+    <servlet-name>TaskService</servlet-name>
+    <servlet-class>com.web.achievetimeline.server.TaskService</servlet-class>
+  </servlet>
+  
+   <servlet-mapping>
+    <servlet-name>TaskService</servlet-name>
+    <url-pattern>/taskservice/createTask</url-pattern>
+  </servlet-mapping>
+  
+  
+  
   
   <!-- Default page to serve -->
   <welcome-file-list>

@@ -313,9 +313,10 @@ $(".SubmitButton").click( function(){
 });
 
 function CreateTask(form) {
+	
 	var taskTitle = $(form).find("input[name='taskTitle']").val();
 	var taskDate = $(form).find("input[name='taskDate']").val();
-	var taskNotes = $(form).find("input[name='taskNotes']").val();
+	var taskNotes = $(form).find("textarea[name='taskNotes']").val();
 	var applicationKey = $(form).find("input[name='applicationKey']").val();
 	
 	var data = {taskTitle: taskTitle, taskDate: taskDate, taskNotes: taskNotes, applicationKey: applicationKey};

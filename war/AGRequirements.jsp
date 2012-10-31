@@ -143,8 +143,11 @@ function GetRequirementsValues() {
 	  	type: 'GET',
 	  	dataType: "json",
 	 	success: function(data) {
-			
 			console.log(data);
+			$(".CompletedButton").each(function(index, element){
+				
+			});
+			
 		}
 	});
 });
