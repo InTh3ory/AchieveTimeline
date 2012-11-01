@@ -109,6 +109,23 @@
 			<input type="text" name="applicationKey" value="" />
 			<div class="SubmitButton">Create</div>
 		</form>	
+		
+		<form id="ModifyTaskForm">
+		<div class="FormTitle Green">Update Task</div>		
+		<br />
+			<div class="Label">Title</div><input type="text" name="taskTitle" value="" /><br/><br/>
+			<div class="Label">Due Date</div><input type="text" name="taskDate" value="" /><br/><br/>
+			<select name="taskStatus">
+				<option value="1">-- Status --</option>
+				<option value="1">New</option>
+				<option value="2">In Progress</option>
+				<option value="3">Complete</option>
+			</select>
+			<div class="Label">Notes</div><br/>
+			<textarea type="text" name="taskNotes" ></textarea>
+			<input type="text" name="applicationKey" value="" />
+			<div class="SubmitButton">Create</div>
+		</form>	
 	</div>
 </div>
 
@@ -262,7 +279,7 @@ function GetAllApplications() {
 	  	url: '/applicationsservice/getApplications',
 	  	type: 'GET',
 	 	success: function(applications) {
-			
+			console.log(applications);
 			var index = 0;
 			
 			while( index < applications.length) {
@@ -275,12 +292,33 @@ function GetAllApplications() {
 				
 				$(html).prependTo("#ApplicationsList");
 				
-				var newApplication = $("#ApplicationsList").find(".Application");
+				var application = $("#ApplicationsList").find(".Application");
 				
-				$(newApplication).fadeIn();
-				$(newApplication).find(".TaskProgressBar").first().progressbar({
+				$(application).fadeIn();
+				$(application).find(".TaskProgressBar").first().progressbar({
 					value: 0
 				});
+				
+				var taskList = $(application).find(".TaskList");
+				
+				var taskIndex = 0;
+				while(taskIndex < data.propertyMap.tasks.length) {
+					var task = $.parseJSON(data.propertyMap.tasks[taskIndex]);
+					
+					var taskSource   = $("#task-template").html();
+					var template = Handlebars.compile(taskSource);
+					var taskContext = {applicationKey: task.propertyMap.applicationKey, key: task.propertyMap.key, taskDate: task.propertyMap.taskDate, taskNotes: task.propertyMap.taskNotes, taskTitle: task.propertyMap.taskTitle};
+					var taskHtml    = template(taskContext);
+					
+					$(taskHtml).prependTo(taskList);
+					
+					var newTask = $(taskList).find(".Task");
+					
+					$(newTask).slideDown();
+					
+					
+					taskIndex++;
+				}
 			
 				index++;
 			}
