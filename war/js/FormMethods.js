@@ -1,4 +1,48 @@
 
+
+function CreateTask(form) {
+	
+	var taskTitle = $(form).find("input[name='taskTitle']").val();
+	var taskDate = $(form).find("input[name='taskDate']").val();
+	var taskNotes = $(form).find("textarea[name='taskNotes']").val();
+	var applicationKey = $(form).find("input[name='applicationKey']").val();
+	
+	var data = {taskTitle: taskTitle, taskDate: taskDate, taskNotes: taskNotes, applicationKey: applicationKey};
+	
+	$.ajax({
+	  	url: '/taskservice/createTask',
+	  	type: 'POST',
+	  	data: data,
+	  	dataType: "json",
+	 	success: function(data) {
+			$("#LightBox").fadeOut();
+			console.log(data);
+			
+			var application = $(".Application[data-key='"+ data.propertyMap.applicationKey +"']");
+			var taskList = $(application).find(".TaskList");
+			
+			$(taskList).find(".EmptyTaskListMessage").html("");
+			$(taskList).slideDown();
+			
+			var source   = $("#task-template").html();
+			var template = Handlebars.compile(source);
+			var context = {applicationKey: data.propertyMap.applicationKey, key: data.propertyMap.key, taskDate: data.propertyMap.taskDate, taskNotes: data.propertyMap.taskNotes, taskTitle: data.propertyMap.taskTitle};
+			var html    = template(context);
+			
+			$(html).prependTo(taskList);
+			
+			var newTask = $(taskList).find(".Task");
+			
+			$(newTask).slideDown();
+						
+			AttachEvents();
+			
+		}
+	});
+	
+}
+
+
 function DeleteApplication(form) {
 
 	var institutionName = $(form).find("input[name='institutionName']").val();

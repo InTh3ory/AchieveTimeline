@@ -46,6 +46,24 @@
 </div>
 </script>
 
+<script id="task-template" type="text/x-handlebars-template">
+<div class='Task' style='border: 1px solid #138DFF;' data-key='{{key}}' data-applicationKey='{{applicationKey}}'>
+	<div class='TaskTitleContainer'>
+		<div class='TaskTitle'>{{taskTitle}}</div>
+		<div class='TaskStatus'>								
+			<select>
+				<option value="1">-- Status --</option>
+				<option value="1">New</option>
+				<option value="2">In Progress</option>
+				<option value="3">Complete</option>
+			</select>								
+		</div>
+	</div>
+	<div class='DueDate'>Due by <span>{{taskDate}}</span></div>
+	<div class='Notes'>{{taskNotes}}</div>
+</div>
+</script>
+
 <head>
     <title>Achieve Timeline</title>    
 </head>
@@ -366,27 +384,6 @@ $(".SubmitButton").click( function(){
 	}
 
 });
-
-function CreateTask(form) {
-	
-	var taskTitle = $(form).find("input[name='taskTitle']").val();
-	var taskDate = $(form).find("input[name='taskDate']").val();
-	var taskNotes = $(form).find("textarea[name='taskNotes']").val();
-	var applicationKey = $(form).find("input[name='applicationKey']").val();
-	
-	var data = {taskTitle: taskTitle, taskDate: taskDate, taskNotes: taskNotes, applicationKey: applicationKey};
-	
-	$.ajax({
-	  	url: '/taskservice/createTask',
-	  	type: 'POST',
-	  	data: data,
-	  	dataType: "json",
-	 	success: function(data) {
-			console.log(data);
-		}
-	});
-	
-}
 
 
 

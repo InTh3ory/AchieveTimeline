@@ -40,7 +40,7 @@ public class TasksService extends HttpServlet {
 		
 		String applicationKey = req.getParameter("applicationKey");
         String taskTitle = req.getParameter("taskTitle");
-        String taskData = req.getParameter("taskData");
+        String taskData = req.getParameter("taskDate");
         String taskNotes = req.getParameter("taskNotes");
         String key = req.getParameter("key");
         
@@ -59,7 +59,7 @@ public class TasksService extends HttpServlet {
 		}
 		
 		task.setProperty("taskTitle", taskTitle);
-		task.setProperty("taskData", taskData);
+		task.setProperty("taskDate", taskData);
 		task.setProperty("taskNotes", taskNotes);
 		task.setProperty("userId", userId);
 		
@@ -68,6 +68,7 @@ public class TasksService extends HttpServlet {
 		
 		// This line adds a new column 'key' to the returned entity, not the persisted one.
 		task.setProperty("key", KeyFactory.keyToString(task.getKey()));
+		task.setProperty("applicationKey", applicationKey);
 		
 		System.out.println("TasksService::doPost - Created task: " + KeyFactory.keyToString(task.getKey()));
 		
