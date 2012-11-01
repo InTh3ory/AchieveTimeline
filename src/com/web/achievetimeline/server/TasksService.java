@@ -44,7 +44,6 @@ public class TasksService extends HttpServlet {
         String taskNotes = req.getParameter("taskNotes");
         String taskStatus = req.getParameter("taskStatus");
         String key = req.getParameter("key");
-        String taskStatus = req.getParameter("taskStatus");
         
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Entity task;

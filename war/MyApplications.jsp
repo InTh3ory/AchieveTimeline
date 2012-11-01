@@ -24,7 +24,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
 <script src="js/handlebars.js"></script>
-<script src="js/miniColors.js"></script>
+
 <script src="js/FormMethods.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
 
@@ -86,7 +86,7 @@
 			<div class="Label">University/College Name</div><input type="text" name="institutionName" value="" /><br/><br/>
 			<div class="Label">Program Name</div><input type="text" name="programName" value="" /><br/><br/>
 			<div class="Label">Color</div><input type="text" name="colorCode" value="" /><br/><br/>
-			<input type="text" name="key" value="" />
+			<input type="hidden" name="key" value="" />
 			<div class="SubmitButton">Update</div>
 		</form>	
 		
@@ -95,7 +95,7 @@
 		<br />
 			<div class="Label">University/College Name</div><input type="text" name="institutionName" value="" readonly="readonly" /><br/><br/>	
 			<div class="Label">Program Name</div><input type="text" name="programName" value="" readonly="readonly" /><br/><br/>			
-			<input type="text" name="key" value="" />
+			<input type="hidden" name="key" value="" />
 			<div class="SubmitButton">Confirm Delete</div>
 		</form>	
 		
@@ -106,7 +106,7 @@
 			<div class="Label">Due Date</div><input type="text" name="taskDate" value="" /><br/><br/>
 			<div class="Label">Notes</div><br/>
 			<textarea type="text" name="taskNotes" ></textarea>
-			<input type="text" name="applicationKey" value="" />
+			<input type="hidden" name="applicationKey" value="" />
 			<input type="hidden" name="taskStatus" value="0" />
 			<div class="SubmitButton">Create</div>
 		</form>	
@@ -124,8 +124,8 @@
 			</select>
 			<div class="Label">Notes</div><br/>
 			<textarea type="text" name="taskNotes" ></textarea>
-			<input type="text" name="applicationKey" value="" />
-			<input type="text" name="key" value="" />
+			<input type="hidden" name="applicationKey" value="" />
+			<input type="hidden" name="key" value="" />
 			<div class="SubmitButton">Create</div>
 		</form>	
 	</div>
