@@ -303,6 +303,8 @@ function GetAllApplications() {
 				
 				var taskIndex = 0;
 				while(taskIndex < data.propertyMap.tasks.length) {
+					$(taskList).find(".EmptyTaskListMessage").html("");
+				
 					var task = $.parseJSON(data.propertyMap.tasks[taskIndex]);
 					
 					var taskSource   = $("#task-template").html();
@@ -314,8 +316,7 @@ function GetAllApplications() {
 					
 					var newTask = $(taskList).find(".Task");
 					
-					$(newTask).slideDown();
-					
+					$(newTask).slideDown();				
 					
 					taskIndex++;
 				}
