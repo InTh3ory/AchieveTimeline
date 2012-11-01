@@ -95,8 +95,24 @@ public class ApplicationsService extends HttpServlet {
 		System.out.println("ApplicationsService::doGet - Number of applications: " + pq.countEntities());
 		
 		List<Entity> applications = new ArrayList<Entity>();
+		List<Entity> tasks = new ArrayList<Entity>();
 		
+		String applicationKey;
+		PreparedQuery pq2;
 		for (Entity result : pq.asIterable()) {
+			
+			// Find all tasks that belong to an application.
+			q = new Query("Task").setAncestor(result.getKey());
+			pq2 = datastore.prepare(q);
+			
+			tasks.clear();
+			System.out.println("Number of tasks for application " + KeyFactory.keyToString(result.getKey()) + " is " + pq2.countEntities());
+			for (Entity task : pq2.asIterable()) {
+				task.setProperty("key", KeyFactory.keyToString(task.getKey()));
+				tasks.add(task);
+			}
+			
+			result.setProperty("tasks", tasks);
 			result.setProperty("key", KeyFactory.keyToString(result.getKey()));
 			applications.add(result);	
 		}
@@ -121,7 +137,7 @@ public class ApplicationsService extends HttpServlet {
         String keyStr = req.getParameter("key");
         
         System.out.print("ApplicationsService::doDelete(");
-        System.out.print("institutionName=" + institutionName + ", programName=" + programName + ", key=" + keyStr + ")");
+        System.out.println("institutionName=" + institutionName + ", programName=" + programName + ", key=" + keyStr + ")");
         
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         
@@ -138,32 +154,19 @@ public class ApplicationsService extends HttpServlet {
 			System.out.println("Key is not null");
 			Key key = KeyFactory.stringToKey(keyStr);
 			for (Entity result : pq.asIterable()) {
-				String firstKey = KeyFactory.keyToString(key);
-				String secondKey =  KeyFactory.keyToString(result.getKey());
+				String resultKey =  KeyFactory.keyToString(result.getKey());
+				System.out.println("Result key: " + resultKey);
 				
-				if(firstKey.equals(secondKey))
+				if(keyStr.equals(resultKey))
 				{					
 					System.out.println("Deleting application " + keyStr);
+					
 					application.setProperty("key", KeyFactory.keyToString(key));
 					datastore.delete(key);
 				}
 			}
         }
-        /*else
-        {
-	     	for (Entity result : pq.asIterable()) {
-				System.out.println("Result.institutionName=" + result.getProperty("institutionName"));
-				System.out.println("Result.programName=" + result.getProperty("programName"));
-				
-				if(institutionName == result.getProperty("institutionName") &&
-				   programName == result.getProperty("programName"))
-				{
-					System.out.println("Deleting key " + KeyFactory.keyToString(result.getKey()));
-					datastore.delete(result.getKey());
-				}
-			}
-        }*/
-		
+        		
 		Gson gson = new Gson();
 		String applicationsJson = gson.toJson(application);
 		
