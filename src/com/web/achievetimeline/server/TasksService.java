@@ -42,6 +42,7 @@ public class TasksService extends HttpServlet {
         String taskTitle = req.getParameter("taskTitle");
         String taskData = req.getParameter("taskDate");
         String taskNotes = req.getParameter("taskNotes");
+        String taskStatus = req.getParameter("taskStatus");
         String key = req.getParameter("key");
         String taskStatus = req.getParameter("taskStatus");
         
@@ -62,6 +63,7 @@ public class TasksService extends HttpServlet {
 		task.setProperty("taskTitle", taskTitle);
 		task.setProperty("taskDate", taskData);
 		task.setProperty("taskNotes", taskNotes);
+		task.setProperty("taskStatus", taskStatus);
 		task.setProperty("userId", userId);
 		task.setProperty("taskStatus", taskStatus);
 		
