@@ -95,9 +95,9 @@ public class ApplicationsService extends HttpServlet {
 		System.out.println("ApplicationsService::doGet - Number of applications: " + pq.countEntities());
 		
 		List<Entity> applications = new ArrayList<Entity>();
-		List<Entity> tasks = new ArrayList<Entity>();
+		List<String> tasks = new ArrayList<String>();
 		
-		String applicationKey;
+		Gson gson = new Gson();
 		PreparedQuery pq2;
 		for (Entity result : pq.asIterable()) {
 			
@@ -109,7 +109,8 @@ public class ApplicationsService extends HttpServlet {
 			System.out.println("Number of tasks for application " + KeyFactory.keyToString(result.getKey()) + " is " + pq2.countEntities());
 			for (Entity task : pq2.asIterable()) {
 				task.setProperty("key", KeyFactory.keyToString(task.getKey()));
-				tasks.add(task);
+				System.out.println("Adding " + gson.toJson(task));
+				tasks.add(gson.toJson(task));
 			}
 			
 			result.setProperty("tasks", tasks);
@@ -117,7 +118,6 @@ public class ApplicationsService extends HttpServlet {
 			applications.add(result);	
 		}
 						
-		Gson gson = new Gson();
 		String applicationsJson = gson.toJson(applications);
 		
 		try {
