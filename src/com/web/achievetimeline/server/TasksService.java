@@ -43,6 +43,7 @@ public class TasksService extends HttpServlet {
         String taskData = req.getParameter("taskDate");
         String taskNotes = req.getParameter("taskNotes");
         String key = req.getParameter("key");
+        String taskStatus = req.getParameter("taskStatus");
         
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Entity task;
@@ -62,6 +63,7 @@ public class TasksService extends HttpServlet {
 		task.setProperty("taskDate", taskData);
 		task.setProperty("taskNotes", taskNotes);
 		task.setProperty("userId", userId);
+		task.setProperty("taskStatus", taskStatus);
 		
 		// Put the entity in the data store.
 		datastore.put(task);
@@ -96,7 +98,7 @@ public class TasksService extends HttpServlet {
 		Query q = new Query("Task").setAncestor(KeyFactory.stringToKey(applicationKey));
 		PreparedQuery pq = datastore.prepare(q);
 		
-		System.out.println("Number of tasks: " + pq.countEntities());
+		//System.out.println("Number of tasks: " + pq.countEntities());
 		List<Entity> applications = new ArrayList<Entity>();
 
 		for (Entity result : pq.asIterable()) {

@@ -43,6 +43,7 @@ public class ApplicationsService extends HttpServlet {
         String colorCode = req.getParameter("colorCode");
         String key = req.getParameter("key");
         
+        
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Entity entity;
         

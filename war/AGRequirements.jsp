@@ -121,7 +121,7 @@ function CalculatePercentageComplete() {
 		}
 	}); 
 	
-	console.log(completed);
+
 	var percent = Math.round((completed / total) * 100);
 	
 		$("#ProgressBar").progressbar({

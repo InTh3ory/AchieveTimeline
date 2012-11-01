@@ -47,12 +47,12 @@
 </script>
 
 <script id="task-template" type="text/x-handlebars-template">
-<div class='Task' style='border: 1px solid #138DFF;' data-key='{{key}}' data-applicationKey='{{applicationKey}}'>
+<div class='Task'  data-key='{{key}}' data-applicationKey='{{applicationKey}}' data-taskDate='{{taskDate}}' data-taskTitle='{{taskTitle}}' data-taskStatus='{{taskStatus}}'>
 	<div class='TaskTitleContainer'>
 		<div class='TaskTitle'>{{taskTitle}}</div>
 		<div class='TaskStatus'>								
-			<select>
-				<option value="1">-- Status --</option>
+			<select name='taskStatus'>
+				<option value="0">-- Status --</option>
 				<option value="1">New</option>
 				<option value="2">In Progress</option>
 				<option value="3">Complete</option>
@@ -107,6 +107,7 @@
 			<div class="Label">Notes</div><br/>
 			<textarea type="text" name="taskNotes" ></textarea>
 			<input type="text" name="applicationKey" value="" />
+			<input type="hidden" name="taskStatus" value="0" />
 			<div class="SubmitButton">Create</div>
 		</form>	
 		
@@ -116,7 +117,7 @@
 			<div class="Label">Title</div><input type="text" name="taskTitle" value="" /><br/><br/>
 			<div class="Label">Due Date</div><input type="text" name="taskDate" value="" /><br/><br/>
 			<select name="taskStatus">
-				<option value="1">-- Status --</option>
+				<option value="0">-- Status --</option>
 				<option value="1">New</option>
 				<option value="2">In Progress</option>
 				<option value="3">Complete</option>
@@ -124,6 +125,7 @@
 			<div class="Label">Notes</div><br/>
 			<textarea type="text" name="taskNotes" ></textarea>
 			<input type="text" name="applicationKey" value="" />
+			<input type="text" name="key" value="" />
 			<div class="SubmitButton">Create</div>
 		</form>	
 	</div>
@@ -138,134 +140,20 @@
 			<a href="MyApplications.jsp"><div class="WidgetTitle ApplicationsTitle">My Applications</div></a>
 			<div class="WidgetContent">
 				<div class="Column1">
-					<div class="Stat">Applications in progress<span class="Orange">4</span></div>
-					<div class="Stat">Applications Complete<span class="Green">1</span></div>
+					<div class="Stat">Applications in progress<span class="Orange ApplicationsInProgress">*</span></div>
+					<div class="Stat">Applications Complete<span class="Green">*</span></div>
 				</div>
 				
 				<div class="Column2">
-					<div class="Stat">Tasks in progress<span class="Orange">19</span></div>
-					<div class="Stat">Tasks Complete<span class="Green">8</span></div>
+					<div class="Stat">Tasks in progress<span class="Orange">*</span></div>
+					<div class="Stat">Tasks Complete<span class="Green">*</span></div>
 				</div>
 			</div>
 		</div>
 		
 		<div id="ActionBar"><div id="NewAppButton">new application</div><div id="ModifyAppButton">Modify application</div><div id="RemoveAppButton">Remove application</div></div>
 		
-		<div id="ApplicationsList">
-			<div class="Application" style='border: 2px solid #00B91A;'>
-				<div class='SelectionIndicator'></div>
-				<div class='ApplicationHeader' style=' border-bottom: 1px solid black;'>
-					<div class='ApplicationTitle'>University of British Columbia</div>
-					<div class='ProgramName' style='color: #00B91A;'>Bachelor of Science</div>
-					<div class="TaskPercent">20% Complete</div>
-					<div class='TaskProgressBar'></div>
-					<div class="TaskActionBar"><div class="NewTaskButton">new task</div><div class="ModifyTaskButton">modify task</div><div class="RemoveTaskButton">remove task</div><div class="ExpandTasksButton">expand tasks</div></div>
-				</div>
-				<div class='TaskListContainer'>
-					<div class='TaskList' style='border-top: 1px solid rgb(70,70,70);'>
-						<div class='EmptyTaskListMessage'>No tasks were found for this application.</div>					
-					</div>					
-				</div>
-			</div>
-			
-			<div class="Application" style='border: 2px solid #138DFF;'>
-				<div class='ApplicationHeader' style=' border-bottom: 1px solid black; '>
-					<div class='SelectionIndicator'></div>
-					<div class='ApplicationTitle'>University of Toronto</div>
-					<div class='ProgramName' style='color: #138DFF;'>Bachelor of Science</div>
-					<div class="TaskPercent">80% Complete</div>
-					<div class='TaskProgressBar'></div>
-					<div class="TaskActionBar"><div class="NewTaskButton">new task</div><div class="ModifyTaskButton">modify task</div><div class="RemoveTaskButton">remove task</div><div class="ExpandTasksButton">expand tasks</div></div>
-				</div>
-				<div class='TaskListContainer'>
-					<div class='TaskList' style='border-top: 1px solid rgb(70,70,70);'>
-						<div class='EmptyTaskListMessage'></div>
-						
-						<div class='Task' style='border: 1px solid #138DFF;'>
-							<div class='TaskTitleContainer'>
-								<div class='TaskTitle'>Submit High School Transcript</div>
-								<div class='TaskStatus'>								
-									<select>
-										<option value="1">-- Status --</option>
-										<option value="1">New</option>
-										<option value="2">In Progress</option>
-										<option value="3">Complete</option>
-									</select>								
-								</div>
-							</div>
-							<div class='DueDate'>Due by <span>Monday Nov 23, 2012</span></div>
-							<div class='Notes'>I need to talk to my teachers and make sure I pass everything!</div>
-						</div>
-						
-						<div class='Task' style='border: 1px solid #138DFF; '>
-							<div class='TaskTitleContainer'>
-								<div class='TaskTitle'>Send in letters of reference</div>
-								<div class='TaskStatus'>								
-									<select>
-										<option value="1">-- Status --</option>
-										<option value="1">New</option>
-										<option value="2">In Progress</option>
-										<option value="3">Complete</option>
-									</select>								
-								</div>
-							</div>
-							<div class='DueDate'>Due by <span>Monday Nov 29, 2012</span></div>
-							<div class='Notes'>I need to talk to my teachers and make sure I pass everything!</div>
-						</div>
-						
-					</div>
-				</div>
-			</div>
-			
-			<div class="Application" style='border: 2px solid #FF07FC;'>
-				<div class='ApplicationHeader' style='border-bottom: 1px solid black; '>
-					<div class='SelectionIndicator'></div>
-					<div class='ApplicationTitle'>University of Alberta</div>
-					<div class='ProgramName' style='color: #FF07FC;'>Bachelor of Science</div>
-					<div class="TaskPercent">80% Complete</div>
-					<div class='TaskProgressBar'></div>
-					<div class="TaskActionBar"><div class="NewTaskButton">new task</div><div class="ModifyTaskButton">modify task</div><div class="RemoveTaskButton">remove task</div><div class="ExpandTasksButton">expand tasks</div></div>
-				</div>
-				<div class='TaskListContainer'>
-					<div class='TaskList' style='border-top: 1px solid rgb(70,70,70);'>
-						<div class='EmptyTaskListMessage'></div>
-						
-						<div class='Task' style='border: 1px solid #FF07FC;'>
-							<div class='TaskTitleContainer'>
-								<div class='TaskTitle'>Submit High School Transcript</div>
-								<div class='TaskStatus'>								
-									<select>
-										<option value="1">-- Status --</option>
-										<option value="1">New</option>
-										<option value="2">In Progress</option>
-										<option value="3">Complete</option>
-									</select>								
-								</div>
-							</div>
-							<div class='DueDate'>Due by <span>Monday Nov 23, 2012</span></div>
-							<div class='Notes'>I need to talk to my teachers and make sure I pass everything!</div>
-						</div>
-						
-						<div class='Task' style='border: 1px solid #FF07FC; '>
-							<div class='TaskTitleContainer'>
-								<div class='TaskTitle'>Send in letters of reference</div>
-								<div class='TaskStatus'>								
-									<select>
-										<option value="1">-- Status --</option>
-										<option value="1">New</option>
-										<option value="2">In Progress</option>
-										<option value="3">Complete</option>
-									</select>								
-								</div>
-							</div>
-							<div class='DueDate'>Due by <span>Monday Nov 29, 2012</span></div>
-							<div class='Notes'>I need to talk to my teachers and make sure I pass everything!</div>
-						</div>
-						
-					</div>
-				</div>
-			</div>
-		
+		<div id="ApplicationsList">		
 		</div>
 		
 	</div>
@@ -281,6 +169,8 @@ function GetAllApplications() {
 	 	success: function(applications) {
 			console.log(applications);
 			var index = 0;
+			
+			$(".ApplicationsInProgress").html(applications.length);
 			
 			while( index < applications.length) {
 				var data = applications[index];
@@ -309,7 +199,8 @@ function GetAllApplications() {
 					
 					var taskSource   = $("#task-template").html();
 					var template = Handlebars.compile(taskSource);
-					var taskContext = {applicationKey: task.propertyMap.applicationKey, key: task.propertyMap.key, taskDate: task.propertyMap.taskDate, taskNotes: task.propertyMap.taskNotes, taskTitle: task.propertyMap.taskTitle};
+					
+					var taskContext = {applicationKey: data.propertyMap.key, key: task.propertyMap.key, taskDate: task.propertyMap.taskDate, taskNotes: task.propertyMap.taskNotes, taskTitle: task.propertyMap.taskTitle};
 					var taskHtml    = template(taskContext);
 					
 					$(taskHtml).prependTo(taskList);
@@ -330,6 +221,8 @@ function GetAllApplications() {
 
 function AttachEvents() {
 
+	
+	$(".ExpandTasksButton").unbind('click');	
 	$(".ExpandTasksButton").toggle(function(){
 		$(this).parents(".Application").find(".TaskList").slideDown();
 		
@@ -343,10 +236,12 @@ function AttachEvents() {
 		$(this).text("expand tasks");
 	});
 
+	$(".Application").unbind('click');	
 	$(".Application").click(function(){
 		ApplicationSelected(this);
 	});
 	
+	$(".NewTaskButton").unbind("click");
 	$(".NewTaskButton").click(function(){
 		$("#LightBox").fadeIn();
 		$("#CreateTaskForm").show();		
@@ -354,8 +249,52 @@ function AttachEvents() {
 		$("#CreateTaskForm").siblings("form").each(function(){
 			$(this).hide();
 		});		
+		
+		$("#CreateTaskForm").find("input[name='taskTitle']").val("");
+		$("#CreateTaskForm").find("input[name='taskDate']").val("");
+		$("#CreateTaskForm").find("textarea").val("");
+		
+	});
+	
+	$(".ModifyTaskButton").unbind("click");
+	$(".ModifyTaskButton").click(function(){
+		$("#LightBox").fadeIn();
+		$("#ModifyTaskForm").show();		
+		
+		$("#ModifyTaskForm").siblings("form").each(function(){
+			$(this).hide();
+		});				
+	});
+	
+	$(".Task").unbind("click");
+	$(".Task").click(function(){
+	
+		var isSelected = $(this).hasClass("Selected");
+	
+		if(!isSelected) {
+			$(".Task").each(function(){
+				$(this).removeClass("Selected");
+			});
+			$(this).addClass("Selected");
+			
+		} 
+		
+		var applicationKey = $(this).attr("data-applicationKey");
+		var key = $(this).attr("data-key");
+		var taskTitle = $(this).attr("data-taskTitle");
+		var taskDate = $(this).attr("data-taskDate");
+		var taskNotes = $(this).find(".Notes").html();
+		
+		$("#ModifyTaskForm").find("input[name='applicationKey']").val(applicationKey);
+		$("#ModifyTaskForm").find("input[name='key']").val(key);
+		$("#ModifyTaskForm").find("input[name='taskTitle']").val(taskTitle);
+		$("#ModifyTaskForm").find("input[name='taskDate']").val(taskDate);
+		$("#ModifyTaskForm").find("textarea").val(taskNotes);
+		
 	});
 }
+
+
 
 $("#NewAppButton").click(function(){
 	$("#LightBox").fadeIn();

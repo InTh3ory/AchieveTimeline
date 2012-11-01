@@ -34,12 +34,12 @@
 		<div id="NavList"><a href="Dashboard.jsp"><span>Dashboard</span></a><span style="float: right">Logout</span></div>
 	</div>
 	<div id="Content">
-		
+		<div class="ToDo">Applications and Timeline are still under construction :) Stay tuned for updates!</div>
 	
 		<div class="Widget">
 			<a href="AGRequirements.jsp"><div class="WidgetTitle AGTitle">"A-G"<br /> Requirements</div></a>
 			<div class="WidgetContent">
-				<div id="ProgressBarTitle">Percent Of Requirements Complete: 88%</div>
+				<div id="ProgressBarTitle">Percent Of Requirements Complete: <span id="PercentComplete">88</span>%</div>
 				<div id="ProgressBar"></div>
 			</div>
 		</div>
@@ -48,13 +48,13 @@
 			<a href="MyApplications.jsp"><div class="WidgetTitle ApplicationsTitle">Applications</div></a>
 			<div class="WidgetContent">
 				<div class="Column1">
-					<div class="Stat">Applications in progress<span class="Orange">4</span></div>
-					<div class="Stat">Applications Complete<span class="Green">1</span></div>
+					<div class="Stat">Applications in progress<span class="Orange">*</span></div>
+					<div class="Stat">Applications Complete<span class="Green">*</span></div>
 				</div>
 				
 				<div class="Column2">
-					<div class="Stat">Tasks in progress<span class="Orange">19</span></div>
-					<div class="Stat">Tasks Complete<span class="Green">8</span></div>
+					<div class="Stat">Tasks in progress<span class="Orange">*</span></div>
+					<div class="Stat">Tasks Complete<span class="Green">*</span></div>
 				</div>
 			</div>
 		</div>
@@ -100,14 +100,57 @@
 	</div>
 <script>
 $(function() {
-        $("#ProgressBar").progressbar({
-            value: 88
-        });
-});
-
-$(function() {
         
 		
+		$.ajax({
+	  	url: 'agrequirements/get',
+	  	type: 'GET',
+	  	dataType: "json",	 	
+		success: function(data) {
+		
+			var objectKeys = keys(data.propertyMap);
+			objectKeys.sort();			
+			
+			var total = 0;
+			var completed = 0;
+			
+			while(total < objectKeys.length) {
+				if(data.propertyMap[objectKeys[total]] == "true") {
+					completed++;
+				}
+				console.log(total);
+				total++;
+			}
+			
+			var percent = Math.round((completed / total) * 100);
+			
+			
+			$("#ProgressBar").progressbar({
+            value: percent
+			});
+			
+			$("#PercentComplete").html(percent);
+		}
+	});
+});
+
+//Refactor
+function keys(obj)
+{
+    var keys = [];
+
+    for(var key in obj)
+    {
+        if(obj.hasOwnProperty(key))
+        {
+            keys.push(key);
+        }
+    }
+
+    return keys;
+}
+
+$(function() {
 		var weekday=new Array(7);
 		weekday[0]="Sunday";
 		weekday[1]="Monday";
@@ -126,7 +169,7 @@ $(function() {
 			$(this).find('.Number').text((today.getDate()));
 			
 			dayIndex++;
-		});
+		});		
 });
 
 </script>

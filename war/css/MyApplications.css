@@ -226,6 +226,8 @@ body {
 	background-color: #00B91A;
 }
 
+
+
 .EmptyTaskListMessage {
 	color: orange;
 	font-size: 12px;
@@ -312,7 +314,21 @@ body {
 	color: rgb(220,220,220);
 	margin-bottom: 8px;
 	border-radius: 2px;
+	border: 1px solid #138DFF;
+}
 
+.Task:hover {
+	border: 1px solid white;
+	border-bottom: 2px solid white;
+}
+
+.Selected {
+	border: 1px solid white;
+	border-bottom: 2px solid white;
+	box-shadow: 0px 0px 10px white;
+	color: orange;
+	border-radius: 4px;
+	background-color: rgb(60,60,60);
 }
 
 .TaskTitleContainer {
@@ -343,7 +359,7 @@ body {
 
 .Notes {
 	margin-top: 10px;
-	border-top:1px solid rgb(100,100,100);
+	border-top:1px solid #138DFF;
 	padding: 10px;
 }	
 

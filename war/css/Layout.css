@@ -151,3 +151,11 @@ a {
 #NavList span:hover {
 	color: orange;
 }
+
+.ToDo {
+	margin-bottom: 10px;
+	padding: 14px;
+	color: white;
+	background-color: black;
+	border-radius: 4px;
+}
