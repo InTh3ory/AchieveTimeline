@@ -131,16 +131,17 @@ public class ApplicationsService extends HttpServlet {
 		
 		PreparedQuery pq = datastore.prepare(q);
         
-		Entity application = null;
+		Entity application = new Entity(keyStr);
 		
 		if(null != keyStr)
         {
 			System.out.println("Key is not null");
 			Key key = KeyFactory.stringToKey(keyStr);
 			for (Entity result : pq.asIterable()) {
-				System.out.println(KeyFactory.keyToString(key));
-				System.out.println(KeyFactory.keyToString(result.getKey()));
-				if(key == result.getKey())
+				String firstKey = KeyFactory.keyToString(key);
+				String secondKey =  KeyFactory.keyToString(result.getKey());
+				
+				if(firstKey.equals(secondKey))
 				{					
 					System.out.println("Deleting application " + keyStr);
 					application.setProperty("key", KeyFactory.keyToString(key));
