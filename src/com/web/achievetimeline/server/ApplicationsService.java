@@ -148,7 +148,10 @@ public class ApplicationsService extends HttpServlet {
 		PreparedQuery pq = datastore.prepare(q);
         
 		Entity application = new Entity(keyStr);
+		List<String> tasks = new ArrayList<String>();
+		Gson gson = new Gson();
 		
+		// TODO: Delete all associated tasks if an application is deleted - Ras, Oct. 2012
 		if(null != keyStr)
         {
 			System.out.println("Key is not null");
@@ -159,15 +162,27 @@ public class ApplicationsService extends HttpServlet {
 				
 				if(keyStr.equals(resultKey))
 				{					
+					// Find all tasks that belong to this application.
+					q = new Query("Task").setAncestor(result.getKey());
+					PreparedQuery pq2 = datastore.prepare(q);
+					
+					System.out.println("Number of tasks deleting: " + pq2.countEntities());
+
+					for (Entity task : pq2.asIterable()) {
+						System.out.println("Deleting task " + KeyFactory.keyToString(task.getKey()));
+						tasks.add(gson.toJson(task));
+						datastore.delete(task.getKey());
+					}
+									
 					System.out.println("Deleting application " + keyStr);
 					
+					application.setProperty("tasks", tasks);
 					application.setProperty("key", KeyFactory.keyToString(key));
 					datastore.delete(key);
 				}
 			}
         }
         		
-		Gson gson = new Gson();
 		String applicationsJson = gson.toJson(application);
 		
 		try {
