@@ -177,21 +177,24 @@ function init() {
 }
 
 function UpdateApplicationCompletion() {
-	console.log('here');
+
 	$(".Application").each(function(){
-		console.log('2');
 		var totalTasks = 0;
 		var tasksComplete = 0;
 		
 		$(this).find("select[name='taskStatus']").each(function(){
-			totalTasks = totalTasks + 1; 
-			console.log('inner');
-		
+			var value = $(this).val();
+			if(parseInt(value) == 3) {			
+				tasksComplete++;
+			}
+				
+			totalTasks++;
 		});
-			
-			
 		
-		console.log(totalTasks);
+		var result = parseInt((tasksComplete/totalTasks)* 100) ;
+		$(this).find(".TaskProgressBar").progressbar({
+            value: result
+        });
 	
 	});
 }
@@ -245,6 +248,8 @@ function GetAllApplications() {
 					$(taskHtml).prependTo(taskList);
 					
 					var newTask = $(taskList).find(".Task");
+													
+					$(newTask).find("select").val(task.propertyMap.taskStatus);
 					
 					$(newTask).slideDown();				
 					
@@ -262,8 +267,13 @@ function AttachEvents() {
 	
 	$("select[name='taskStatus']").unbind('change');
 	$("select[name='taskStatus']").change(function(){
+		
+		$("#ModifyTaskForm").find("select[name='taskStatus']").val($(this).val());
 		UpdateApplicationCompletion();
-	});
+		var modifyTaskForm = $("#ModifyTaskForm");
+		
+		ModifyTask(modifyTaskForm); 
+	}); 
 
 	
 	$(".ExpandTasksButton").unbind('click');	

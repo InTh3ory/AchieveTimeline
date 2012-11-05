@@ -24,12 +24,16 @@ function ModifyTask(form) {
 	var taskTitle = $(form).find("input[name='taskTitle']").val();
 	var taskDate = $(form).find("input[name='taskDate']").val();
 	var taskNotes = $(form).find("textarea[name='taskNotes']").val();
-	var taskStatus = $(form).find("textarea[name='taskStatus']").val();
+	var taskStatus = $(form).find("select[name='taskStatus']").val();
 	var applicationKey = $(form).find("input[name='applicationKey']").val();
 	var key = $(form).find("input[name='key']").val();
 	
-	var data = {key: key, taskTitle: taskTitle, taskDate: taskDate, taskNotes: taskNotes, applicationKey: applicationKey, taskStatus: taskStatus};
+	if(taskTitle == null || taskDate == null || taskNotes == null || taskStatus == null || applicationKey == null || key == null) {
+		console.error("Modify task value was null");
+	}
 	
+	var data = {key: key, taskTitle: taskTitle, taskDate: taskDate, taskNotes: taskNotes, applicationKey: applicationKey, taskStatus: taskStatus};
+	console.log(taskStatus);
 	$.ajax({
 	  	url: '/taskservice/createTask',
 	  	type: 'POST',
@@ -50,8 +54,10 @@ function ModifyTask(form) {
 			var html    = template(context);
 			
 			$(html).prependTo(taskList);
-			
-			var newTask = $(taskList).find(".Task");
+	
+			var newTask = $(taskList).find(".Task[data-key='"+data.propertyMap.key+"']");
+	
+			$(newTask).find("select").val(data.propertyMap.taskStatus);
 			
 			$(newTask).slideDown();
 						
