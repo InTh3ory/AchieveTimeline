@@ -69,7 +69,7 @@ public class ApplicationsService extends HttpServlet {
 		// This line adds a new column 'key' to the returned entity, not the persisted one.
 		entity.setProperty("key", KeyFactory.keyToString(entity.getKey()));
 		
-		System.out.println("entity persisted: "+KeyFactory.keyToString(entity.getKey()));
+		//System.out.println("entity persisted: "+KeyFactory.keyToString(entity.getKey()));
 		
 		// Notify the client of success.
 		resp.setContentType("application/json");
@@ -93,15 +93,16 @@ public class ApplicationsService extends HttpServlet {
         Query q = new Query("Application").setFilter(f).addSort("institutionName", SortDirection.DESCENDING);;
 		
 		PreparedQuery pq = datastore.prepare(q);
-		System.out.println("ApplicationsService::doGet - Number of applications: " + pq.countEntities());
+		//System.out.println("ApplicationsService::doGet - Number of applications: " + pq.countEntities());
 		
 		List<Entity> applications = new ArrayList<Entity>();
-		List<String> tasks = new ArrayList<String>();
+		
 		
 		Gson gson = new Gson();
 		PreparedQuery pq2;
+		
 		for (Entity result : pq.asIterable()) {
-			
+			List<String> tasks = new ArrayList<String>();
 			// Find all tasks that belong to an application.
 			q = new Query("Task").setAncestor(result.getKey());
 			pq2 = datastore.prepare(q);
@@ -110,9 +111,10 @@ public class ApplicationsService extends HttpServlet {
 			System.out.println("Number of tasks for application " + KeyFactory.keyToString(result.getKey()) + " is " + pq2.countEntities());
 			for (Entity task : pq2.asIterable()) {
 				task.setProperty("key", KeyFactory.keyToString(task.getKey()));
-				System.out.println("Adding " + gson.toJson(task));
+				//System.out.println("Adding " + gson.toJson(task));
 				tasks.add(gson.toJson(task));
 			}
+			
 			
 			result.setProperty("tasks", tasks);
 			result.setProperty("key", KeyFactory.keyToString(result.getKey()));
@@ -167,7 +169,7 @@ public class ApplicationsService extends HttpServlet {
 					q = new Query("Task").setAncestor(result.getKey());
 					PreparedQuery pq2 = datastore.prepare(q);
 					
-					System.out.println("Number of tasks deleting: " + pq2.countEntities());
+					//System.out.println("Number of tasks deleting: " + pq2.countEntities());
 
 					for (Entity task : pq2.asIterable()) {
 						System.out.println("Deleting task " + KeyFactory.keyToString(task.getKey()));
@@ -175,7 +177,7 @@ public class ApplicationsService extends HttpServlet {
 						datastore.delete(task.getKey());
 					}
 									
-					System.out.println("Deleting application " + keyStr);
+					//System.out.println("Deleting application " + keyStr);
 					
 					application.setProperty("tasks", tasks);
 					application.setProperty("key", KeyFactory.keyToString(key));

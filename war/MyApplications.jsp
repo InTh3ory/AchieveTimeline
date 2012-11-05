@@ -86,7 +86,7 @@
 			<div class="Label">University/College Name</div><input type="text" name="institutionName" value="" /><br/><br/>
 			<div class="Label">Program Name</div><input type="text" name="programName" value="" /><br/><br/>
 			<div class="Label">Color</div><input type="text" name="colorCode" value="" /><br/><br/>
-			<input type="hidden" name="key" value="" />
+			<input type="text" name="key" value="" />
 			<div class="SubmitButton">Update</div>
 		</form>	
 		
@@ -95,7 +95,7 @@
 		<br />
 			<div class="Label">University/College Name</div><input type="text" name="institutionName" value="" readonly="readonly" /><br/><br/>	
 			<div class="Label">Program Name</div><input type="text" name="programName" value="" readonly="readonly" /><br/><br/>			
-			<input type="hidden" name="key" value="" />
+			<input type="text" name="key" value="" />
 			<div class="SubmitButton">Confirm Delete</div>
 		</form>	
 		
@@ -106,8 +106,8 @@
 			<div class="Label">Due Date</div><input type="text" name="taskDate" value="" /><br/><br/>
 			<div class="Label">Notes</div><br/>
 			<textarea type="text" name="taskNotes" ></textarea>
-			<input type="hidden" name="applicationKey" value="" />
-			<input type="hidden" name="taskStatus" value="0" />
+			<input type="text" name="applicationKey" value="" />
+			<input type="text" name="taskStatus" value="0" />
 			<div class="SubmitButton">Create</div>
 		</form>	
 		
@@ -124,9 +124,18 @@
 			</select>
 			<div class="Label">Notes</div><br/>
 			<textarea type="text" name="taskNotes" ></textarea>
-			<input type="hidden" name="applicationKey" value="" />
-			<input type="hidden" name="key" value="" />
-			<div class="SubmitButton">Create</div>
+			<input type="text" name="applicationKey" value="" />
+			<input type="text" name="key" value="" />
+			<div class="SubmitButton">Update</div>
+		</form>	
+		
+		<form id="DeleteTaskForm">
+		<div class="FormTitle Green">Delete Task</div>		
+		<br />
+			<div class="Label">Title</div><input type="text" name="taskTitle" value="" /><br/><br/>			
+			<input type="text" name="applicationKey" value="" />
+			<input type="text" name="key" value="" />
+			<div class="SubmitButton">Confirm Delete</div>
 		</form>	
 	</div>
 </div>
@@ -158,16 +167,46 @@
 		
 	</div>
 <script>
-AttachEvents();
 
 GetAllApplications();
+
+
+function init() {
+	AttachEvents();
+	UpdateApplicationCompletion();
+}
+
+function UpdateApplicationCompletion() {
+	console.log('here');
+	$(".Application").each(function(){
+		console.log('2');
+		var totalTasks = 0;
+		var tasksComplete = 0;
+		
+		$(this).find("select[name='taskStatus']").each(function(){
+			totalTasks = totalTasks + 1; 
+			console.log('inner');
+		
+		});
+			
+			
+		
+		console.log(totalTasks);
+	
+	});
+}
+
+
+
+	
+
 
 function GetAllApplications() {
 	$.ajax({
 	  	url: '/applicationsservice/getApplications',
 	  	type: 'GET',
 	 	success: function(applications) {
-			console.log(applications);
+			
 			var index = 0;
 			
 			$(".ApplicationsInProgress").html(applications.length);
@@ -182,7 +221,7 @@ function GetAllApplications() {
 				
 				$(html).prependTo("#ApplicationsList");
 				
-				var application = $("#ApplicationsList").find(".Application");
+				var application = $("#ApplicationsList").find(".Application[data-key='"+ data.propertyMap.key+"']");
 				
 				$(application).fadeIn();
 				$(application).find(".TaskProgressBar").first().progressbar({
@@ -214,12 +253,17 @@ function GetAllApplications() {
 			
 				index++;
 			}
-			AttachEvents();
+			init();
 		}
 	});
 }
 
 function AttachEvents() {
+	
+	$("select[name='taskStatus']").unbind('change');
+	$("select[name='taskStatus']").change(function(){
+		UpdateApplicationCompletion();
+	});
 
 	
 	$(".ExpandTasksButton").unbind('click');	
@@ -266,6 +310,16 @@ function AttachEvents() {
 		});				
 	});
 	
+	$(".RemoveTaskButton").unbind("click");
+	$(".RemoveTaskButton").click(function(){
+		$("#LightBox").fadeIn();
+		$("#DeleteTaskForm").show();		
+		
+		$("#DeleteTaskForm").siblings("form").each(function(){
+			$(this).hide();
+		});				
+	});
+	
 	$(".Task").unbind("click");
 	$(".Task").click(function(){
 	
@@ -290,6 +344,11 @@ function AttachEvents() {
 		$("#ModifyTaskForm").find("input[name='taskTitle']").val(taskTitle);
 		$("#ModifyTaskForm").find("input[name='taskDate']").val(taskDate);
 		$("#ModifyTaskForm").find("textarea").val(taskNotes);
+		
+		$("#DeleteTaskForm").find("input[name='applicationKey']").val(applicationKey);
+		$("#DeleteTaskForm").find("input[name='key']").val(key);
+		$("#DeleteTaskForm").find("input[name='taskTitle']").val(taskTitle);
+		
 		
 	});
 }
@@ -358,6 +417,12 @@ $(".SubmitButton").click( function(){
 		break;		
 		case "CreateTaskForm":
 			CreateTask(form);
+		break;
+		case "ModifyTaskForm":
+			ModifyTask(form);
+		break;
+		case "DeleteTaskForm":
+			DeleteTask(form);
 		break;
 	}
 

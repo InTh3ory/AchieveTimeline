@@ -1,4 +1,65 @@
+function DeleteTask(form) {
+	
+	var applicationKey = $(form).find("input[name='applicationKey']").val();
+	var key = $(form).find("input[name='key']").val();
 
+	var data = "?key=" + key + "&applicationKey=" + applicationKey;
+
+	$.ajax({
+	  	url: '/taskservice/deleteTask' + data,
+	  	type: 'DELETE',
+	  	dataType: "json",
+	 	success: function(data) {
+
+			$("#LightBox").fadeOut();			
+			$(".Task[data-key='"+data.propertyMap.key+"']").remove();						
+		}
+	});
+}
+
+
+
+
+function ModifyTask(form) {
+	var taskTitle = $(form).find("input[name='taskTitle']").val();
+	var taskDate = $(form).find("input[name='taskDate']").val();
+	var taskNotes = $(form).find("textarea[name='taskNotes']").val();
+	var taskStatus = $(form).find("textarea[name='taskStatus']").val();
+	var applicationKey = $(form).find("input[name='applicationKey']").val();
+	var key = $(form).find("input[name='key']").val();
+	
+	var data = {key: key, taskTitle: taskTitle, taskDate: taskDate, taskNotes: taskNotes, applicationKey: applicationKey, taskStatus: taskStatus};
+	
+	$.ajax({
+	  	url: '/taskservice/createTask',
+	  	type: 'POST',
+	  	data: data,
+	  	dataType: "json",
+	 	success: function(data) {
+			$("#LightBox").fadeOut();
+			console.log(data);
+			
+			$(".Task[data-key='"+data.propertyMap.key+"']").remove();
+			
+			var application = $(".Application[data-key='"+ data.propertyMap.applicationKey +"']");
+			var taskList = $(application).find(".TaskList");
+								
+			var source   = $("#task-template").html();
+			var template = Handlebars.compile(source);
+			var context = {applicationKey: data.propertyMap.applicationKey, key: data.propertyMap.key, taskDate: data.propertyMap.taskDate, taskNotes: data.propertyMap.taskNotes, taskTitle: data.propertyMap.taskTitle, taskStatus: data.propertyMap.taskStatus};
+			var html    = template(context);
+			
+			$(html).prependTo(taskList);
+			
+			var newTask = $(taskList).find(".Task");
+			
+			$(newTask).slideDown();
+						
+			AttachEvents();
+			
+		}
+	});
+}
 
 function CreateTask(form) {
 	

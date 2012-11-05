@@ -51,11 +51,13 @@ public class TasksService extends HttpServlet {
 		if(null != key)
 		{
 			// Modifying existing task.
+			System.out.println("Modifying Task");
 			task = new Entity(KeyFactory.stringToKey(key));
 		}
 		else
 		{
 			// Creating a new task.
+			System.out.println("Creating new Task");
 			task = new Entity("Task", KeyFactory.stringToKey(applicationKey));
 		}
 		
@@ -126,8 +128,8 @@ public class TasksService extends HttpServlet {
         String applicationKey = req.getParameter("applicationKey");
         String keyStr = req.getParameter("key");
         
-        System.out.print("ApplicationsService::doDelete(");
-        System.out.print("applicationKey=" + applicationKey + ", key=" + keyStr + ")");
+        System.out.println("ApplicationsService::doDelete(");
+        System.out.println("applicationKey=" + applicationKey + ", key=" + keyStr + ")");
         
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         
@@ -146,7 +148,8 @@ public class TasksService extends HttpServlet {
         {
 			Key key = KeyFactory.stringToKey(keyStr);
 			for (Entity result : pq.asIterable()) {
-				if(key == result.getKey())
+				String resultKey = KeyFactory.keyToString(result.getKey());
+				if(keyStr.equals(resultKey))
 				{
 					System.out.println("Deleting task " + keyStr);
 					task = result;
