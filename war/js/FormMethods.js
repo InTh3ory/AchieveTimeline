@@ -33,7 +33,7 @@ function ModifyTask(form) {
 	}
 	
 	var data = {key: key, taskTitle: taskTitle, taskDate: taskDate, taskNotes: taskNotes, applicationKey: applicationKey, taskStatus: taskStatus};
-	console.log(taskStatus);
+	
 	$.ajax({
 	  	url: '/taskservice/createTask',
 	  	type: 'POST',

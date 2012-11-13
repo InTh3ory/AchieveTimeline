@@ -12,7 +12,7 @@
     if (user != null) {
     	
     } else {
-    	response.sendRedirect(userService.createLoginURL(request.getRequestURI()));
+    	response.sendRedirect(response.encodeRedirectURL("Welcome.jsp"));
     }
    
 %>
@@ -34,7 +34,7 @@
 	<div class='ApplicationHeader' style='border-bottom: 1px solid black;'>
 		<div class='ApplicationTitle'>{{institutionName}}</div>
 		<div class='ProgramName' style='color: {{colorCode}};'>{{programName}}</div>
-		<div class="TaskPercent">0% Complete</div>
+		<div class="TaskPercent"><span class='PercentValue'>0</span>% Complete</div>
 		<div class='TaskProgressBar'></div>
 		<div class="TaskActionBar"><div class="NewTaskButton">new task</div><div class="ModifyTaskButton">modify task</div><div class="RemoveTaskButton">remove task</div><div class="ExpandTasksButton">expand tasks</div></div>
 	</div>
@@ -51,7 +51,7 @@
 	<div class='TaskTitleContainer'>
 		<div class='TaskTitle'>{{taskTitle}}</div>
 		<div class='TaskStatus'>								
-			<select name='taskStatus'>
+			<select class ='TaskStatusDropDown' name='taskStatus'>
 				<option value="0">-- Status --</option>
 				<option value="1">New</option>
 				<option value="2">In Progress</option>
@@ -86,7 +86,7 @@
 			<div class="Label">University/College Name</div><input type="text" name="institutionName" value="" /><br/><br/>
 			<div class="Label">Program Name</div><input type="text" name="programName" value="" /><br/><br/>
 			<div class="Label">Color</div><input type="text" name="colorCode" value="" /><br/><br/>
-			<input type="text" name="key" value="" />
+			<input type="hidden" name="key" value="" />
 			<div class="SubmitButton">Update</div>
 		</form>	
 		
@@ -95,7 +95,7 @@
 		<br />
 			<div class="Label">University/College Name</div><input type="text" name="institutionName" value="" readonly="readonly" /><br/><br/>	
 			<div class="Label">Program Name</div><input type="text" name="programName" value="" readonly="readonly" /><br/><br/>			
-			<input type="text" name="key" value="" />
+			<input type="hidden" name="key" value="" />
 			<div class="SubmitButton">Confirm Delete</div>
 		</form>	
 		
@@ -106,8 +106,8 @@
 			<div class="Label">Due Date</div><input type="text" name="taskDate" value="" /><br/><br/>
 			<div class="Label">Notes</div><br/>
 			<textarea type="text" name="taskNotes" ></textarea>
-			<input type="text" name="applicationKey" value="" />
-			<input type="text" name="taskStatus" value="0" />
+			<input type="hidden" name="applicationKey" value="" />
+			<input type="hidden" name="taskStatus" value="0" />
 			<div class="SubmitButton">Create</div>
 		</form>	
 		
@@ -124,17 +124,17 @@
 			</select>
 			<div class="Label">Notes</div><br/>
 			<textarea type="text" name="taskNotes" ></textarea>
-			<input type="text" name="applicationKey" value="" />
-			<input type="text" name="key" value="" />
+			<input type="hidden" name="applicationKey" value="" />
+			<input type="hidden" name="key" value="" />
 			<div class="SubmitButton">Update</div>
 		</form>	
 		
 		<form id="DeleteTaskForm">
 		<div class="FormTitle Green">Delete Task</div>		
 		<br />
-			<div class="Label">Title</div><input type="text" name="taskTitle" value="" /><br/><br/>			
-			<input type="text" name="applicationKey" value="" />
-			<input type="text" name="key" value="" />
+			<div class="Label">Title</div><input type="text" name="taskTitle" value="" readonly="readonly"/><br/><br/>			
+			<input type="hidden" name="applicationKey" value="" />
+			<input type="hidden" name="key" value="" />
 			<div class="SubmitButton">Confirm Delete</div>
 		</form>	
 	</div>
@@ -142,7 +142,7 @@
 
 <body>
 	<div id="NavBar">
-		<div id="NavList"><a href="Dashboard.jsp"><span>Dashboard</span></a><span style="float: right">Logout</span></div>
+		<div id="NavList"><a href="Dashboard.jsp"><span>Dashboard</span></a><a href='<%= userService.createLogoutURL(request.getRequestURI()) %>'><span style="float: right">Logout</span></a></div>
 	</div>
 	<div id="Content">
 		<div class="Widget">
@@ -150,12 +150,12 @@
 			<div class="WidgetContent">
 				<div class="Column1">
 					<div class="Stat">Applications in progress<span class="Orange ApplicationsInProgress">*</span></div>
-					<div class="Stat">Applications Complete<span class="Green">*</span></div>
+					<div class="Stat">Applications Complete<span class="Green ApplicationsComplete">*</span></div>
 				</div>
 				
 				<div class="Column2">
-					<div class="Stat">Tasks in progress<span class="Orange">*</span></div>
-					<div class="Stat">Tasks Complete<span class="Green">*</span></div>
+					<div class="Stat">Tasks in progress<span class="Orange TasksInProgress">*</span></div>
+					<div class="Stat">Tasks Complete<span class="Green TasksComplete">*</span></div>
 				</div>
 			</div>
 		</div>
@@ -176,27 +176,68 @@ function init() {
 	UpdateApplicationCompletion();
 }
 
-function UpdateApplicationCompletion() {
-
+function UpdateApplicationCompletion() {	
+	
+	var applicationsComplete = 0;
+	var applicationsInProgress = 0;
+	var totalTasksInProgress = 0;
+	var totalTasksComplete = 0;	
+		
 	$(".Application").each(function(){
 		var totalTasks = 0;
 		var tasksComplete = 0;
-		
+		var tasksInProgress = 0;
+	
+		var allTasksComplete = true;
+		var taskIndex = 0;
 		$(this).find("select[name='taskStatus']").each(function(){
+			taskIndex++;
 			var value = $(this).val();
 			if(parseInt(value) == 3) {			
 				tasksComplete++;
+				totalTasksComplete++;
+			} else {
+				
+				allTasksComplete = false;
+			}
+			
+			if(parseInt(value) == 2) {			
+				tasksInProgress++;
+				totalTasksInProgress++;
 			}
 				
 			totalTasks++;
 		});
 		
-		var result = parseInt((tasksComplete/totalTasks)* 100) ;
+		if(allTasksComplete && taskIndex > 0) {
+			applicationsComplete++;
+		} else {
+			applicationsInProgress++;
+		}
+		
+		
+		var result = parseInt((tasksComplete/totalTasks)* 100);
+	
+		if(totalTasks == 0) {
+			result = 0;
+		}
+		
+		
 		$(this).find(".TaskProgressBar").progressbar({
             value: result
         });
+
+		$(this).find(".PercentValue").text(result);
+		
+		
 	
 	});
+	
+	$(".TasksInProgress").text(totalTasksInProgress);
+	$(".TasksComplete").text(totalTasksComplete);
+	$(".ApplicationsInProgress").text(applicationsInProgress);
+	$(".ApplicationsComplete").text(applicationsComplete);
+	
 }
 
 
@@ -216,7 +257,7 @@ function GetAllApplications() {
 			
 			while( index < applications.length) {
 				var data = applications[index];
-				console.log(data);
+			
 				var source   = $("#application-template").html();
 				var template = Handlebars.compile(source);
 				var context = {key: data.propertyMap.key, institutionName: data.propertyMap.institutionName, programName: data.propertyMap.programName, colorCode: data.propertyMap.colorCode};
@@ -233,8 +274,11 @@ function GetAllApplications() {
 				
 				var taskList = $(application).find(".TaskList");
 				
+				
+				
 				var taskIndex = 0;
 				while(taskIndex < data.propertyMap.tasks.length) {
+					
 					$(taskList).find(".EmptyTaskListMessage").html("");
 				
 					var task = $.parseJSON(data.propertyMap.tasks[taskIndex]);
@@ -247,8 +291,8 @@ function GetAllApplications() {
 					
 					$(taskHtml).prependTo(taskList);
 					
-					var newTask = $(taskList).find(".Task");
-													
+					var newTask = $(taskList).find(".Task[data-key='"+task.propertyMap.key+"']");
+							
 					$(newTask).find("select").val(task.propertyMap.taskStatus);
 					
 					$(newTask).slideDown();				
@@ -265,8 +309,8 @@ function GetAllApplications() {
 
 function AttachEvents() {
 	
-	$("select[name='taskStatus']").unbind('change');
-	$("select[name='taskStatus']").change(function(){
+	$(".TaskStatusDropDown[name='taskStatus']").unbind('change');
+	$(".TaskStatusDropDown[name='taskStatus']").change(function(){
 		
 		$("#ModifyTaskForm").find("select[name='taskStatus']").val($(this).val());
 		UpdateApplicationCompletion();
@@ -435,6 +479,8 @@ $(".SubmitButton").click( function(){
 			DeleteTask(form);
 		break;
 	}
+	
+	UpdateApplicationCompletion();
 
 });
 

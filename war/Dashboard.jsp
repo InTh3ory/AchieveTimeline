@@ -14,7 +14,7 @@
     if (user != null) {
     	
     } else {
-    	response.sendRedirect(userService.createLoginURL(request.getRequestURI()));
+    	response.sendRedirect(response.encodeRedirectURL("Welcome.jsp"));
     }
    
 %>
@@ -31,7 +31,7 @@
 </head>
 <body>
 	<div id="NavBar">
-		<div id="NavList"><a href="Dashboard.jsp"><span>Dashboard</span></a><span style="float: right">Logout</span></div>
+		<div id="NavList"><a href="Dashboard.jsp"><span>Dashboard</span></a><a href='<%= userService.createLogoutURL(request.getRequestURI()) %>'><span style="float: right">Logout</span></a></div>
 	</div>
 	<div id="Content">
 		<div class="ToDo">Applications and Timeline are still under construction :) Stay tuned for updates!</div>
@@ -48,13 +48,13 @@
 			<a href="MyApplications.jsp"><div class="WidgetTitle ApplicationsTitle">Applications</div></a>
 			<div class="WidgetContent">
 				<div class="Column1">
-					<div class="Stat">Applications in progress<span class="Orange">*</span></div>
-					<div class="Stat">Applications Complete<span class="Green">*</span></div>
+					<div class="Stat">Applications in progress<span class="Orange ApplicationsInProgress">*</span></div>
+					<div class="Stat">Applications Complete<span class="Green ApplicationsComplete">*</span></div>
 				</div>
 				
 				<div class="Column2">
-					<div class="Stat">Tasks in progress<span class="Orange">*</span></div>
-					<div class="Stat">Tasks Complete<span class="Green">*</span></div>
+					<div class="Stat">Tasks in progress<span class="Orange TasksInProgress">*</span></div>
+					<div class="Stat">Tasks Complete<span class="Green TasksComplete">*</span></div>
 				</div>
 			</div>
 		</div>
@@ -99,40 +99,90 @@
 	
 	</div>
 <script>
-$(function() {
-        
+$(function() {      
+		$.ajax({
+			url: 'agrequirements/get',
+			type: 'GET',
+			dataType: "json",	 	
+			success: function(data) {
+				
+				var objectKeys = keys(data.propertyMap);
+				objectKeys.sort();			
+				
+				var total = 0;
+				var completed = 0;
+				
+				while(total < objectKeys.length) {
+					if(data.propertyMap[objectKeys[total]] == "true") {
+						completed++;
+					}
+					total++;
+				}
+				
+				var percent = Math.round((completed / total) * 100);
+				
+				
+				$("#ProgressBar").progressbar({
+				value: percent
+				});
+				
+				$("#PercentComplete").html(percent);
+			}
+		});
 		
 		$.ajax({
-	  	url: 'agrequirements/get',
+	  	url: '/applicationsservice/getApplications',
 	  	type: 'GET',
-	  	dataType: "json",	 	
-		success: function(data) {
-		
-			var objectKeys = keys(data.propertyMap);
-			objectKeys.sort();			
+	 	success: function(applications) {
+			calculateApplicationStats(applications);
 			
-			var total = 0;
-			var completed = 0;
-			
-			while(total < objectKeys.length) {
-				if(data.propertyMap[objectKeys[total]] == "true") {
-					completed++;
-				}
-				console.log(total);
-				total++;
-			}
-			
-			var percent = Math.round((completed / total) * 100);
-			
-			
-			$("#ProgressBar").progressbar({
-            value: percent
-			});
-			
-			$("#PercentComplete").html(percent);
 		}
 	});
 });
+
+function calculateApplicationStats(applications) {
+	var applicationsInProgress = 0;
+	var applicationsComplete = 0;
+	var tasksInProgress = 0;
+	var tasksComplete = 0;
+	
+	var index = 0;
+	
+	while(index < applications.length) {
+		var current = applications[index];
+		var allTasksComplete = true;
+		
+		var taskIndex = 0; 
+		while(taskIndex < current.propertyMap.tasks.length) {
+			var currentTask = $.parseJSON(current.propertyMap.tasks[taskIndex]);
+		
+			if(currentTask.propertyMap.taskStatus == "3") {
+				tasksComplete++;
+			} 
+			
+			if(currentTask.propertyMap.taskStatus == "2") {
+				tasksInProgress++;
+				allTasksComplete = false;
+			}
+			
+			taskIndex++;
+		}
+		
+		if(allTasksComplete && taskIndex > 0) {
+			applicationsComplete++;
+		} else {
+			applicationsInProgress++;
+		}
+		index++;
+	}
+	
+	$(".ApplicationsInProgress").text(applicationsInProgress);
+	$(".ApplicationsComplete").text(applicationsComplete);
+	$(".TasksInProgress").text(tasksInProgress);
+	$(".TasksComplete").text(tasksComplete);
+	
+
+}
 
 //Refactor
 function keys(obj)

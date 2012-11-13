@@ -12,7 +12,7 @@
     if (user != null) {
     	
     } else {
-    	response.sendRedirect(userService.createLoginURL(request.getRequestURI()));
+    	response.sendRedirect(response.encodeRedirectURL("Welcome.jsp"));
     }
    
 %>
@@ -28,7 +28,7 @@
 </head>
 <body>
 	<div id="NavBar">
-		<div id="NavList"><a href="Dashboard.jsp"><span>Dashboard</span></a><span style="float: right">Logout</span></div>
+		<div id="NavList"><a href="Dashboard.jsp"><span>Dashboard</span></a><a href='<%= userService.createLogoutURL(request.getRequestURI()) %>'><span style="float: right">Logout</span></a></div>
 	</div>
 	<div id="Content">
 		<div class="Widget">

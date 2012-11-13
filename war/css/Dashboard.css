@@ -78,8 +78,6 @@ body {
 	position: relative;
 	height: 120px;
 	margin-bottom: 40px;
-	border: 2px solid rgb(100,100,100);
-	box-shadow: 4px 4px 4px #777;
 	border-radius: 8px;
 	background: rgb(72,72,72); /* Old browsers */
 	background: -moz-linear-gradient(top,  rgba(72,72,72,1) 0%, rgba(40,40,40,1) 100%); /* FF3.6+ */
@@ -117,6 +115,8 @@ body {
 	background: -ms-linear-gradient(top,  rgba(255,168,76,1) 0%,rgba(255,123,13,1) 100%); /* IE10+ */
 	background: linear-gradient(to bottom,  rgba(255,168,76,1) 0%,rgba(255,123,13,1) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffa84c', endColorstr='#ff7b0d',GradientType=0 ); /* IE6-9 */
+	border-bottom-left-radius: 8px;
+	border-top-left-radius: 8px;
 
 }
 
